@@ -351,8 +351,8 @@ p{margin:0;text-wrap:pretty}
 .reward ol li{counter-increment:s;display:flex;gap:14px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line)}
 .reward ol li::before{content:counter(s);font-family:var(--font-head);font-weight:600;color:var(--blue-ink);min-width:1ch}
 .scratch{position:relative;width:100%;max-width:520px;margin-inline:auto;aspect-ratio:1.42/1;border-radius:26px;user-select:none;-webkit-user-select:none}
-.scratch-under{position:absolute;inset:0;border-radius:inherit;overflow:hidden;background:radial-gradient(120% 90% at 20% 0%,#fff7ec,#f3e3cd 55%,#e6cfae);color:var(--sand-ink);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;box-shadow:var(--shadow-2)}
-.scratch-under::before{content:"";position:absolute;inset:10px;border-radius:18px;border:1.5px dashed rgba(91,64,40,.35);pointer-events:none}
+.scratch-under{position:absolute;inset:0;border-radius:inherit;overflow:hidden;background:#fff;color:var(--sand-ink);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;box-shadow:var(--shadow-2)}
+.scratch-under::before{content:"";position:absolute;inset:10px;border-radius:18px;border:1.5px dashed #d3dae5;pointer-events:none}
 .scratch-under .k{font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#7a5a3c}
 .scratch-under .v{font-family:var(--font-head);font-size:clamp(4rem,10vw,7rem);letter-spacing:-.06em;line-height:.95;margin-top:6px;color:#2b1f14}
 .scratch-under .v small{font-size:.36em;letter-spacing:-.02em;margin-left:4px}
