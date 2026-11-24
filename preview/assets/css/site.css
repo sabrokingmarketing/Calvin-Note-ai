@@ -614,3 +614,8 @@ h1,h2,h3{text-transform:capitalize}
 .slide-pause .i-play{display:none}
 .slide-pause[aria-pressed="true"] .i-play{display:block}
 .slide-pause[aria-pressed="true"] .i-pause{display:none}
+
+/* Cloud logo */
+.brand-logo{height:68px;width:auto;display:block}
+.site-footer .brand-logo{height:64px}
+@media (max-width:980px){.brand-logo{height:60px}}

@@ -106,8 +106,8 @@ def head(title, desc, path):
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -129,7 +129,7 @@ def header(path):
         for f, l in S.NAV + [("contact.html", "Contact")])
     return f"""<header class="site-header">
   <div class="wrap bar">
-    <a class="brand" href="index.html" aria-label="{e(S.BRAND)} home"><span class="brand-mark">{MARK}</span>{e(S.BRAND)}</a>
+    <a class="brand" href="index.html" aria-label="{e(S.BRAND)} home"><img class="brand-logo" src="assets/img/logo-outline.png" alt="{e(S.BRAND)}" width="310" height="200"></a>
     <nav class="nav-pill" aria-label="Main">{links}</nav>
     <div class="head-actions">
       <a class="btn btn-white btn-sm" href="pre-order.html">Pre-order<span class="long">&nbsp;· {S.PRICE}</span></a>
@@ -150,7 +150,7 @@ def footer():
   <div class="wrap">
     <div class="f-top">
       <div>
-        <a class="brand" href="index.html"><span class="brand-mark">{MARK}</span>{e(S.BRAND)}</a>
+        <a class="brand" href="index.html" aria-label="{e(S.BRAND)} home"><img class="brand-logo" src="assets/img/logo.png" alt="{e(S.BRAND)}" width="310" height="200"></a>
         <p>A stitched folio for your desk and an AI assistant for the record. Made for people who live in meetings.</p>
         <a class="btn btn-primary btn-sm f-cta" href="pre-order.html">Pre-order for {S.PRICE} {ARR}</a>
       </div>
@@ -763,9 +763,4 @@ if __name__ == "__main__":
     open(os.path.join(OUT, "sitemap.xml"), "w").write(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n')
     open(os.path.join(OUT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nSitemap: {S.DOMAIN}/sitemap.xml\n")
-    open(os.path.join(OUT, "favicon.svg"), "w").write(
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">'
-        '<stop offset="0" stop-color="#4a8cf5"/><stop offset="1" stop-color="#1f5bd6"/></linearGradient></defs>'
-        '<rect width="32" height="32" rx="8" fill="url(#g)"/><g fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">'
-        '<rect x="6.5" y="9" width="19" height="14" rx="2.5"/><path d="M7 11.5 16 17l9-5.5"/></g><circle cx="16" cy="20.3" r="1.7" fill="#fff"/></svg>')
     print("built", len(PAGES), "pages")
