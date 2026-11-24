@@ -628,3 +628,27 @@ h1,h2,h3{text-transform:capitalize}
 .has-reward .p-note-reward{display:block}
 .has-reward .p-note-base{display:none}
 .side-card .p-note-reward{color:#11623b}
+
+/* Welcome pop-up */
+.promo{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:16px}
+.promo[hidden]{display:none}
+.promo-backdrop{position:absolute;inset:0;background:rgba(10,22,48,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .25s var(--ease-out)}
+.promo-card{position:relative;width:min(440px,100%);max-height:calc(100svh - 32px);overflow-y:auto;background:#fff;border-radius:28px;padding:28px 24px 18px;text-align:center;box-shadow:0 40px 90px -30px rgba(10,30,80,.6);opacity:0;transform:translateY(14px) scale(.98);transition:opacity .3s var(--ease-out),transform .35s var(--ease-out)}
+.promo.is-open .promo-backdrop{opacity:1}
+.promo.is-open .promo-card{opacity:1;transform:none}
+.promo-x{position:absolute;right:10px;top:10px;width:44px;height:44px;border-radius:50%;border:0;background:var(--surface);display:grid;place-items:center;cursor:pointer;color:var(--ink);transition:background-color .18s}
+.promo-x:hover{background:#e8edf5}
+.promo-x svg{width:18px;height:18px}
+.promo-tag{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--blue-ink);background:#eaf1fe;border-radius:999px;padding:6px 12px}
+.promo-tag svg{width:15px;height:15px}
+.promo-card h2{font-size:clamp(1.6rem,5vw,2rem);margin-top:14px}
+.promo-card>p{color:var(--muted);margin:10px auto 18px;max-width:30ch;font-size:15.5px}
+.promo-card .scratch{border-radius:20px}
+.promo-card .scratch-under{box-shadow:none;border:1px solid var(--line)}
+.promo-card .scratch-under .v{font-size:clamp(3.4rem,14vw,5rem)}
+.promo-card .scratch-tools{margin-top:16px}
+.promo-card .scratch-tools .btn{width:100%}
+.promo-later{margin-top:6px;min-height:44px;border:0;background:none;color:var(--muted);font-size:14.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.promo-later:hover{color:var(--ink)}
+.promo-open,.promo-open body{overflow:hidden}
+.promo-card:focus{outline:none}

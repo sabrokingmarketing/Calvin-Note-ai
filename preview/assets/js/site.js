@@ -269,16 +269,19 @@
   }
   if (hasReward()) markReward();
 
-  /* Scratch card */
-  var sc = document.querySelector("[data-scratch]");
-  if (sc) {
+  /* Scratch cards (homepage section and the welcome pop-up). Revealing one reveals them all. */
+  var cards = [];
+  function setupScratch(sc) {
     var canvas = sc.querySelector("canvas");
     var ctx = canvas.getContext("2d");
+    var group = sc.closest("[data-scratch-group]") || sc.parentElement;
     var live = document.getElementById("scratch-live");
     var done = false, drawing = false, last = null, moves = 0;
 
     function paintFoil() {
+      if (done) return;
       var r = sc.getBoundingClientRect();
+      if (!r.width) return;
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.round(r.width * dpr);
       canvas.height = Math.round(r.height * dpr);
@@ -288,12 +291,10 @@
       var g = ctx.createLinearGradient(0, 0, w, h);
       g.addColorStop(0, "#2f6fe4"); g.addColorStop(.45, "#5b9af2"); g.addColorStop(.6, "#cfe2fb"); g.addColorStop(.75, "#5b9af2"); g.addColorStop(1, "#1f4fb8");
       ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
-      // fine foil grain
       for (var i = 0; i < w * h / 60; i++) {
         ctx.fillStyle = "rgba(255,255,255," + (Math.random() * .12).toFixed(3) + ")";
         ctx.fillRect(Math.random() * w, Math.random() * h, 1.2, 1.2);
       }
-      // envelope flap, echoing the folio
       ctx.strokeStyle = "rgba(255,255,255,.55)"; ctx.lineWidth = 1.5; ctx.setLineDash([5, 5]);
       ctx.beginPath(); ctx.moveTo(14, h * .22); ctx.lineTo(w / 2, h * .62); ctx.lineTo(w - 14, h * .22); ctx.stroke();
       ctx.setLineDash([]);
@@ -308,11 +309,7 @@
       ctx.fillStyle = "rgba(255,255,255,.85)";
       ctx.fillText("Use a finger or your mouse", w / 2, h * .8 + 26);
     }
-
-    function point(e) {
-      var r = canvas.getBoundingClientRect();
-      return { x: e.clientX - r.left, y: e.clientY - r.top };
-    }
+    function point(e) { var r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
     function scratchLine(a, b) {
       ctx.globalCompositeOperation = "destination-out";
       ctx.strokeStyle = "#000"; ctx.globalAlpha = 1;
@@ -343,13 +340,16 @@
       done = true;
       sc.classList.add("done");
       markReward();
-      if (!silent) burst();
-      if (live) live.textContent = "Revealed: 20% off your pre-order. Your reward is saved and will be added to your pre-order.";
+      if (!silent) {
+        burst();
+        if (live) live.textContent = "Revealed: " + CFG.reward + " off. You pay " + CFG.priceReward + " instead of " + CFG.price + ". Your reward is saved and added to your pre-order.";
+        cards.forEach(function (c) { if (c.reveal !== reveal) c.reveal(true); });
+      }
     }
     canvas.addEventListener("pointerdown", function (e) {
       if (done) return;
       drawing = true; last = point(e);
-      canvas.setPointerCapture(e.pointerId);
+      try { canvas.setPointerCapture(e.pointerId); } catch (x) {}
       scratchLine(last, last);
     });
     canvas.addEventListener("pointermove", function (e) {
@@ -361,16 +361,55 @@
     function end() { if (drawing && !done && cleared() > .48) reveal(); drawing = false; }
     canvas.addEventListener("pointerup", end);
     canvas.addEventListener("pointercancel", end);
-    var btn = document.querySelector("[data-reveal]");
+    var btn = group.querySelector("[data-reveal]");
     if (btn) btn.addEventListener("click", function () { reveal(); });
+    return { reveal: reveal, paint: paintFoil, untouched: function () { return moves === 0; } };
+  }
+  document.querySelectorAll("[data-scratch]").forEach(function (sc) { cards.push(setupScratch(sc)); });
+  if (hasReward()) cards.forEach(function (c) { c.reveal(true); });
+  else {
+    cards.forEach(function (c) { c.paint(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { cards.forEach(function (c) { if (c.untouched()) c.paint(); }); });
+    var rw;
+    window.addEventListener("resize", function () { clearTimeout(rw); rw = setTimeout(function () { cards.forEach(function (c) { if (c.untouched()) c.paint(); }); }, 150); });
+  }
 
-    if (hasReward()) { reveal(true); }
-    else {
-      paintFoil();
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (!done) paintFoil(); });
-      var rw;
-      window.addEventListener("resize", function () { clearTimeout(rw); rw = setTimeout(function () { if (!done && moves === 0) paintFoil(); }, 150); });
+  /* Welcome pop-up: once per visitor, only if the reward isn't revealed yet */
+  var promo = document.getElementById("promo");
+  var PROMO_KEY = "noteai-promo-seen";
+  if (promo && !hasReward() && store.get(PROMO_KEY) !== "1") {
+    var promoCard = promo.querySelector(".promo-card");
+    var lastFocus = null;
+    var promoScratch = cards.filter(function (c, i) { return promo.contains(document.querySelectorAll("[data-scratch]")[i]); })[0];
+    function focusables() { return Array.prototype.slice.call(promoCard.querySelectorAll("a[href],button:not([disabled])")).filter(function (el) { return el.offsetParent !== null; }); }
+    function onKey(e) {
+      if (e.key === "Escape") { e.preventDefault(); closePromo(); return; }
+      if (e.key === "Tab") {
+        var f = focusables(); if (!f.length) return;
+        var first = f[0], lastEl = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); lastEl.focus(); }
+        else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); first.focus(); }
+      }
     }
+    function openPromo() {
+      if (hasReward()) return;
+      lastFocus = document.activeElement;
+      promo.hidden = false;
+      document.documentElement.classList.add("promo-open");
+      requestAnimationFrame(function () { promo.classList.add("is-open"); if (promoScratch) promoScratch.paint(); });
+      store.set(PROMO_KEY, "1");
+      document.addEventListener("keydown", onKey);
+      promoCard.setAttribute("tabindex", "-1"); setTimeout(function () { promoCard.focus({ preventScroll: true }); }, 50);
+    }
+    function closePromo() {
+      promo.classList.remove("is-open");
+      document.documentElement.classList.remove("promo-open");
+      document.removeEventListener("keydown", onKey);
+      setTimeout(function () { promo.hidden = true; }, reduce ? 0 : 250);
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+    promo.querySelectorAll("[data-promo-close]").forEach(function (b) { b.addEventListener("click", closePromo); });
+    setTimeout(openPromo, 1200);
   }
 
   /* Pre-order form: validate, then hand off to WhatsApp or email (no server) */

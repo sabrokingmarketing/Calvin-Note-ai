@@ -82,6 +82,41 @@ def price_block():
 
 TOP_SCRIPT = '<script>/* Always open a page at the top (unless the link points to a spot on the page) */\ntry{if("scrollRestoration" in history)history.scrollRestoration="manual";}catch(e){}\n(function(){function top(){if(!location.hash){document.documentElement.style.scrollBehavior="auto";window.scrollTo(0,0);document.documentElement.style.scrollBehavior="";}}\ndocument.addEventListener("DOMContentLoaded",top);window.addEventListener("load",top);window.addEventListener("pageshow",function(e){if(e.persisted)top();});})();</script>\n'
 
+def scratch_group():
+    """One scratch card with its Reveal / Claim buttons."""
+    return f"""<div data-scratch-group>
+    <div class="scratch" data-scratch>
+      <div class="scratch-under" aria-hidden="true">
+        <span class="k">Your reward</span>
+        <span class="v">{S.REWARD.rstrip('%')}<small>% off</small></span>
+        <span class="s">You pay {S.PRICE_REWARD} instead of {S.PRICE}</span>
+      </div>
+      <canvas aria-label="Scratch card. Scratch to reveal your reward, or use the Reveal button below." role="img"></canvas>
+      <div class="confetti" aria-hidden="true"></div>
+    </div>
+    <div class="scratch-tools">
+      <button class="btn btn-ghost before" type="button" data-reveal>Reveal my reward</button>
+      <a class="btn btn-primary reward-won" href="pre-order.html">Claim {S.REWARD} with my pre-order {ARR}</a>
+    </div>
+    </div>"""
+
+
+def promo():
+    """Welcome pop-up with its own scratch card (shown once, by site.js)."""
+    return f"""<div class="promo" id="promo" hidden>
+  <div class="promo-backdrop" data-promo-close></div>
+  <div class="promo-card" role="dialog" aria-modal="true" aria-labelledby="promo-title" aria-describedby="promo-desc">
+    <button class="promo-x" type="button" aria-label="Close" data-promo-close>{ui("x")}</button>
+    <span class="promo-tag">{ui("gift")}Welcome gift</span>
+    <h2 id="promo-title">Scratch to reveal your {S.REWARD} off</h2>
+    <p id="promo-desc">A thank-you for being early. Scratch the card and pay {S.PRICE_REWARD} instead of {S.PRICE}.</p>
+    {scratch_group()}
+    <button class="promo-later" type="button" data-promo-close>Maybe later</button>
+  </div>
+</div>
+"""
+
+
 MARK = ('<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" '
         'stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/>'
         '<path d="M3.5 7.5 12 13l8.5-5.5"/><circle cx="12" cy="16.4" r="1.35" fill="#fff" stroke="none"/></svg>')
@@ -194,7 +229,8 @@ def footer():
 
 
 def page(path, title, desc, body):
-    return head(title, desc, path) + header(path) + '<main id="main">' + body + "</main>\n" + footer()
+    pop = "" if path in ("pre-order.html", "privacy.html", "terms.html", "404.html") else promo()
+    return head(title, desc, path) + header(path) + '<main id="main">' + body + "</main>\n" + pop + footer()
 
 
 def page_hero(crumb, h1, lede, actions=True, extra=""):
@@ -364,19 +400,7 @@ def scratch_card():
     </ul>
   </div>
   <div>
-    <div class="scratch" data-scratch>
-      <div class="scratch-under" aria-hidden="true">
-        <span class="k">Your reward</span>
-        <span class="v">{S.REWARD.rstrip('%')}<small>% off</small></span>
-        <span class="s">You pay {S.PRICE_REWARD} instead of {S.PRICE}</span>
-      </div>
-      <canvas aria-label="Scratch card. Scratch to reveal your reward, or use the Reveal button below." role="img"></canvas>
-      <div class="confetti" aria-hidden="true"></div>
-    </div>
-    <div class="scratch-tools">
-      <button class="btn btn-ghost before" type="button" data-reveal>Reveal my reward</button>
-      <a class="btn btn-primary reward-won" href="pre-order.html">Claim {S.REWARD} with my pre-order {ARR}</a>
-    </div>
+    {scratch_group()}
   </div>
 </div>"""
 

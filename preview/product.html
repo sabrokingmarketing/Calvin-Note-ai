@@ -104,6 +104,31 @@ document.addEventListener("DOMContentLoaded",top);window.addEventListener("load"
   <a class="btn btn-white" href="https://wa.me/27XXXXXXXXX">Chat on WhatsApp</a></div>
 </div></section>
 </main>
+<div class="promo" id="promo" hidden>
+  <div class="promo-backdrop" data-promo-close></div>
+  <div class="promo-card" role="dialog" aria-modal="true" aria-labelledby="promo-title" aria-describedby="promo-desc">
+    <button class="promo-x" type="button" aria-label="Close" data-promo-close><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg></button>
+    <span class="promo-tag"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 7v14m8-10v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8m3.5-4a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5a1 1 0 0 1 0 5"/><rect width="18" height="4" x="3" y="7" rx="1"/></g></svg>Welcome gift</span>
+    <h2 id="promo-title">Scratch to reveal your 20% off</h2>
+    <p id="promo-desc">A thank-you for being early. Scratch the card and pay R5 200 instead of R6 500.</p>
+    <div data-scratch-group>
+    <div class="scratch" data-scratch>
+      <div class="scratch-under" aria-hidden="true">
+        <span class="k">Your reward</span>
+        <span class="v">20<small>% off</small></span>
+        <span class="s">You pay R5 200 instead of R6 500</span>
+      </div>
+      <canvas aria-label="Scratch card. Scratch to reveal your reward, or use the Reveal button below." role="img"></canvas>
+      <div class="confetti" aria-hidden="true"></div>
+    </div>
+    <div class="scratch-tools">
+      <button class="btn btn-ghost before" type="button" data-reveal>Reveal my reward</button>
+      <a class="btn btn-primary reward-won" href="pre-order.html">Claim 20% with my pre-order <span class="arr" aria-hidden="true">→</span></a>
+    </div>
+    </div>
+    <button class="promo-later" type="button" data-promo-close>Maybe later</button>
+  </div>
+</div>
 <footer class="site-footer">
   <div class="wrap">
     <div class="f-top">
