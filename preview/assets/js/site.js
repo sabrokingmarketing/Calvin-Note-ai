@@ -158,6 +158,36 @@
     });
   }
 
+  /* Photo loop (inside the folio): fades every 4.5 s, dots to jump, pause button */
+  document.querySelectorAll("[data-slideshow]").forEach(function (box) {
+    var slides = Array.prototype.slice.call(box.querySelectorAll(".slide"));
+    var dots = Array.prototype.slice.call(box.querySelectorAll(".slide-dot"));
+    var pause = box.querySelector("[data-slide-pause]");
+    var cur = 0, t = null, paused = false, seen = false;
+    slides.forEach(function (im) { im.loading = "eager"; });
+    function go(n) {
+      cur = (n + slides.length) % slides.length;
+      slides.forEach(function (s, i) { s.classList.toggle("on", i === cur); s.setAttribute("aria-hidden", String(i !== cur)); });
+      dots.forEach(function (d, i) { if (i === cur) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
+      tick();
+    }
+    function tick() {
+      clearTimeout(t);
+      if (!paused && seen && !document.hidden) t = setTimeout(function () { go(cur + 1); }, 4500);
+    }
+    dots.forEach(function (d, i) { d.addEventListener("click", function () { go(i); }); });
+    if (pause) pause.addEventListener("click", function () {
+      paused = !paused;
+      pause.setAttribute("aria-pressed", String(paused));
+      pause.setAttribute("aria-label", paused ? "Play photos" : "Pause photos");
+      tick();
+    });
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { seen = en[0].isIntersecting; tick(); }, { threshold: .2 }).observe(box);
+    else seen = true;
+    document.addEventListener("visibilitychange", tick);
+    go(0);
+  });
+
   /* Colour swatches swap the product photo */
   document.querySelectorAll("[data-swatches]").forEach(function (group) {
     var img = document.getElementById(group.getAttribute("data-swatches"));

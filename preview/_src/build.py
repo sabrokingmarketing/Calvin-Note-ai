@@ -39,7 +39,7 @@ def lifestyle(stem="life-meeting", alt="A woman in an office holding a tan HiNot
 </div>"""
 
 
-def inside(stem="folio-open", alt="The tan folio lying open on a wooden desk, showing a phone in a pocket with a camera window, a pen loop and a cream notebook under the snap flap", w=1600, h=2142):
+def inside(slides=None, stem="folio-open", alt="The tan folio lying open on a wooden desk, showing a phone in a pocket with a camera window, a pen loop and a cream notebook under the snap flap", w=1600, h=2142):
     items = [
         ("Phone pocket", "Holds your phone, with a window for the camera."),
         ("Notebook", "Paper for the thoughts you want to keep by hand."),
@@ -54,8 +54,23 @@ def inside(stem="folio-open", alt="The tan folio lying open on a wooden desk, sh
     <p class="lede">Open the flap and your phone, notebook and pen are laid out side by side, ready when the meeting starts.</p>
     <ul class="dot-list">{lis}</ul>
   </div>
-  <div class="inside-img">{photo(stem, alt, w, h, "(max-width: 860px) 92vw, 560px")}</div>
+  {slideshow(slides) if slides else '<div class="inside-img">' + photo(stem, alt, w, h, "(max-width: 860px) 92vw, 560px") + '</div>'}
 </div>"""
+
+
+def slideshow(slides):
+    """Photos that fade from one to the next every few seconds, with dots and a pause button."""
+    imgs, dots = "", ""
+    for i, (stem, alt) in enumerate(slides):
+        imgs += photo(stem, alt, 1600, 2142, "(max-width: 860px) 92vw, 560px", "slide" + (" on" if i == 0 else ""))
+        dots += (f'<button class="slide-dot" type="button" aria-label="Show photo {i + 1} of {len(slides)}"'
+                 f'{" aria-current=\"true\"" if i == 0 else ""}><i></i></button>')
+    return (f'<div class="inside-img slideshow" data-slideshow>{imgs}'
+            f'<div class="slide-ctrl"><div class="slide-dots" role="group" aria-label="Photos">{dots}</div>'
+            '<button class="slide-pause" type="button" aria-pressed="false" aria-label="Pause photos" data-slide-pause>'
+            '<svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>'
+            '<svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.6A1 1 0 0 0 8 5.5z"/></svg>'
+            '</button></div></div>')
 
 
 MARK = ('<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" '
@@ -441,7 +456,11 @@ def home():
 
 <section class="section"><div class="wrap">{lifestyle()}</div></section>
 
-<section class="section ground-surface"><div class="wrap">{inside("folio-table", "The tan folio lying open on a long boardroom table, with a phone in its pocket, a cream notebook and a pen beside it, and a city view through the windows", 1600, 2142)}</div></section>
+<section class="section ground-surface"><div class="wrap">{inside([
+    ("folio-travertine", "The tan folio lying open on a travertine stone slab, with a phone in its pocket, a cream notebook and a gold pen beside it"),
+    ("folio-table", "The tan folio lying open on a long boardroom table, with a phone in its pocket, a cream notebook and a pen beside it, and a city view through the windows"),
+    ("folio-open", "The tan folio lying open on a wooden desk, showing a phone in a pocket with a camera window, a pen loop and a cream notebook under the snap flap"),
+])}</div></section>
 
 <section class="section ground-soft"><div class="wrap">
   <div class="s-head"><h2>Quiet the noise. Keep the details.</h2></div>
@@ -486,7 +505,7 @@ def product():
     body = f"""
 {page_hero("The notebook", "A stitched folio with an assistant inside the work", "Paper for the ideas you want to keep by hand. An AI assistant for everything that was said.", True, '<div class="hero-shot float">' + photo("folio-trio", "Three HiNote Book folios side by side in tan, black and blush", 1400, 946, "(max-width: 960px) 92vw, 880px") + '</div>')}
 <section class="section ground-sand"><div class="wrap">{showcase("Choose the colour you'll carry every day", "prod-img")}</div></section>
-<section class="section"><div class="wrap">{inside("folio-boardroom", "The tan folio lying open on a boardroom table, with a phone in its pocket, a pen and a notebook, chairs and a city view behind", 1600, 2142)}</div></section>
+<section class="section"><div class="wrap">{inside(None, "folio-boardroom", "The tan folio lying open on a boardroom table, with a phone in its pocket, a pen and a notebook, chairs and a city view behind", 1600, 2142)}</div></section>
 <section class="section ground-surface"><div class="wrap">{lifestyle()}</div></section>
 <section class="section"><div class="wrap">
   <div class="s-head"><h2>Paper and software, each doing its part</h2><p>The folio is for you. The assistant is for the record.</p></div>
