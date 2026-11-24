@@ -113,14 +113,13 @@
       });
     }
     show(0);
-    /* Auto-advance every 5 seconds. Pauses on hover, keyboard focus, the pause button,
-       when off screen or in a background tab, and never runs under reduced motion. */
+    /* Loops every 5 seconds (1 > 2 > 3 > 1 ...). Stops only for the pause button,
+       keyboard focus inside the section, or when the section is off screen / tab hidden. */
     var ctrl = document.querySelector(".step-ctrl");
     var pauseBtn = document.querySelector("[data-steps-pause]");
     var stepTabs = stepList ? Array.prototype.slice.call(stepList.querySelectorAll("[role=tab]")) : [];
-    var cur = 0, timer = null, userPaused = reduce, hovering = false, focused = false, onScreen = false;
-    if (reduce && pauseBtn) { pauseBtn.setAttribute("aria-pressed", "true"); pauseBtn.setAttribute("aria-label", "Play automatic steps"); }
-    function canRun() { return !userPaused && !hovering && !focused && onScreen && !document.hidden; }
+    var cur = 0, timer = null, userPaused = false, focused = false, onScreen = false;
+    function canRun() { return !userPaused && !focused && onScreen && !document.hidden; }
     function restart() {
       clearTimeout(timer);
       if (!ctrl) return;
@@ -133,12 +132,14 @@
     if (stepList) stepList.addEventListener("tabchange", function (e) { cur = e.detail; show(cur); restart(); });
     var zone = stack.closest("section");
     if (zone) {
-      zone.addEventListener("mouseenter", function () { hovering = true; restart(); });
-      zone.addEventListener("mouseleave", function () { hovering = false; restart(); });
-      zone.addEventListener("focusin", function (e) { if (e.target !== pauseBtn) { focused = true; restart(); } });
-      zone.addEventListener("focusout", function () { focused = false; restart(); });
+      // Only keyboard focus pauses the loop (a mouse click or hover does not)
+      zone.addEventListener("focusin", function (e) {
+        var kb = false; try { kb = e.target.matches(":focus-visible"); } catch (x) {}
+        if (kb && e.target !== pauseBtn) { focused = true; restart(); }
+      });
+      zone.addEventListener("focusout", function () { if (focused) { focused = false; restart(); } });
       if ("IntersectionObserver" in window) {
-        new IntersectionObserver(function (en) { onScreen = en[0].isIntersecting; restart(); }, { threshold: .35 }).observe(zone);
+        new IntersectionObserver(function (en) { onScreen = en[0].isIntersecting; restart(); }, { threshold: .15 }).observe(zone);
       } else { onScreen = true; }
     }
     document.addEventListener("visibilitychange", restart);
