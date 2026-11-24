@@ -36,7 +36,7 @@ EMAIL = "hello@hinotebook.example"
 # TODO: city or area the team works from (district only)
 LOCATION = "South Africa"
 # TODO: live domain, used for sitemap.xml and share links
-DOMAIN = "https://www.hinotebook.example"
+DOMAIN = "https://hi-notebook.vercel.app"  # TODO: change to the real domain once it is connected in Vercel
 # TODO: business hours
 HOURS = "Monday to Friday, during business hours"
 

@@ -5,7 +5,8 @@ import content as S  # all business text lives in content.py
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
-KIT = os.path.join(OUT, "..", ".claude", "skills", "design-taste-frontend", "assets", "icons", "demo")
+_KIT_PARTS = (".claude", "skills", "design-taste-frontend", "assets", "icons", "demo")
+KIT = next((d for d in (os.path.join(OUT, *_KIT_PARTS), os.path.join(OUT, "..", *_KIT_PARTS)) if os.path.isdir(d)), os.path.join(OUT, *_KIT_PARTS))
 e = html.escape
 
 
@@ -135,7 +136,7 @@ def head(title, desc, path):
     return f"""<!doctype html>
 <html lang="en-ZA">
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8">{'<base href="/">' if path == "404.html" else ""}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(full)}</title>
 <meta name="description" content="{e(desc)}">
