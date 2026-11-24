@@ -181,9 +181,9 @@ p{margin:0;text-wrap:pretty}
 .typing::after{content:"";display:inline-block;width:6px;height:11px;margin-left:2px;background:var(--blue-2);vertical-align:-1px;animation:pulse 1s steps(1) infinite}
 
 /* Folio beside the laptop */
-.stage .folio-float{position:absolute;width:28%;left:-8%;bottom:-3%;z-index:3;filter:drop-shadow(0 26px 30px rgba(15,35,80,.35));transform:rotate(-7deg)}
-@media (max-width:1100px){.stage .folio-float{left:3%}}
-@media (max-width:700px){.stage .folio-float{width:36%;left:5%;bottom:-8%}}
+.stage .folio-float{position:absolute;width:42%;left:-11%;bottom:-4%;z-index:3;filter:drop-shadow(0 26px 30px rgba(15,35,80,.35))}
+@media (max-width:1340px){.stage .folio-float{left:2%;width:40%}}
+@media (max-width:700px){.stage .folio-float{width:56%;left:4%;bottom:-9%}}
 
 /* ---------- Sections ---------- */
 .section{padding:clamp(80px,12vh,140px) 0}

@@ -398,7 +398,7 @@ def home():
   <p class="lede">A stitched folio for your desk and an AI assistant that listens, writes the summary and drafts the follow-up, so you can stay in the conversation.</p>
   <div class="actions"><a class="btn btn-primary" href="pre-order.html">Pre-order for {S.PRICE} {ARR}</a><a class="btn btn-white" href="how-it-works.html">See how it works</a></div>
 </div>
-<div class="stage">{app_frame()}{img("folio-tan", "Tan leather folio", "(max-width: 700px) 38vw, 320px", "folio-float", True)}</div>
+<div class="stage">{app_frame()}<img class="folio-float" src="assets/img/folio-trio-1600.webp" srcset="assets/img/folio-trio-800.webp 800w, assets/img/folio-trio-1600.webp 1400w" sizes="(max-width: 700px) 56vw, 460px" width="1400" height="946" alt="HiNote Book folios in tan, black and blush" decoding="async"></div>
 </section>
 
 <section class="section"><div class="wrap">
