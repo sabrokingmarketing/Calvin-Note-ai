@@ -596,3 +596,5 @@ h1,h2,h3{text-transform:capitalize}
 .hero-shot{max-width:880px;margin:clamp(36px,6vh,56px) auto 0;border-radius:var(--radius-l);background:#f7f5f4;padding:clamp(12px,3vw,36px);box-shadow:0 40px 80px -30px rgba(10,30,80,.5)}
 .hero-shot img{width:100%;height:auto;border-radius:12px}
 .side-card img.lineup{width:100%;filter:none;border-radius:16px;margin:0 0 16px}
+.hero-shot.float{background:none;padding:0;box-shadow:none;max-width:820px}
+.hero-shot.float img{border-radius:0;filter:drop-shadow(0 28px 34px rgba(10,30,80,.38))}

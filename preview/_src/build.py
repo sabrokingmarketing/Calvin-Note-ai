@@ -484,7 +484,7 @@ def product():
     ]
     rows = "".join(f"<li><b style='min-width:11rem;display:inline-block'>{e(k)}</b><span>{e(v)}</span></li>" for k, v in specs)
     body = f"""
-{page_hero("The notebook", "A stitched folio with an assistant inside the work", "Paper for the ideas you want to keep by hand. An AI assistant for everything that was said.", True, '<div class="hero-shot">' + photo("folio-lineup", "Three HiNote Book folios side by side in tan, black and blush", 906, 650, "(max-width: 960px) 92vw, 880px") + '</div>')}
+{page_hero("The notebook", "A stitched folio with an assistant inside the work", "Paper for the ideas you want to keep by hand. An AI assistant for everything that was said.", True, '<div class="hero-shot float">' + photo("folio-trio", "Three HiNote Book folios side by side in tan, black and blush", 1400, 946, "(max-width: 960px) 92vw, 880px") + '</div>')}
 <section class="section ground-sand"><div class="wrap">{showcase("Choose the colour you'll carry every day", "prod-img")}</div></section>
 <section class="section"><div class="wrap">{inside("folio-boardroom", "The tan folio lying open on a boardroom table, with a phone in its pocket, a pen and a notebook, chairs and a city view behind", 1600, 2142)}</div></section>
 <section class="section ground-surface"><div class="wrap">{lifestyle()}</div></section>
