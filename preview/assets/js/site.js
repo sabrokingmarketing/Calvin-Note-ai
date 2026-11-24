@@ -104,17 +104,27 @@
   if (stack) {
     var cards = Array.prototype.slice.call(stack.querySelectorAll(".step-card"));
     var stepList = document.querySelector("[data-steps-tabs]");
+    /* Carousel: the next card slides in from the right, the current one slides out left.
+       The card that wraps round (left back to right) jumps there out of sight, then fades in. */
     function show(idx) {
       cards.forEach(function (c, i) {
         var pos = (i - idx + cards.length) % cards.length;
-        c.setAttribute("data-pos", String(pos));
+        var prev = c.getAttribute("data-pos");
+        if (prev === "2" && pos === 1) {
+          c.classList.add("jump");
+          c.setAttribute("data-pos", "1");
+          void c.offsetWidth;
+          requestAnimationFrame(function () { c.classList.remove("jump"); });
+        } else {
+          c.setAttribute("data-pos", String(pos));
+        }
         c.setAttribute("aria-hidden", pos === 0 ? "false" : "true");
         c.tabIndex = -1;
       });
     }
     show(0);
-    /* Loops every 5 seconds (1 > 2 > 3 > 1 ...). Stops only for the pause button,
-       keyboard focus inside the section, or when the section is off screen / tab hidden. */
+    /* Loops forever every 5 seconds (1 > 2 > 3 > 1 ...). Only the pause button stops it;
+       it also rests while the section is off screen or the tab is hidden, and carries on when back. */
     var ctrl = document.querySelector(".step-ctrl");
     var pauseBtn = document.querySelector("[data-steps-pause]");
     var stepTabs = stepList ? Array.prototype.slice.call(stepList.querySelectorAll("[role=tab]")) : [];
@@ -132,12 +142,6 @@
     if (stepList) stepList.addEventListener("tabchange", function (e) { cur = e.detail; show(cur); restart(); });
     var zone = stack.closest("section");
     if (zone) {
-      // Only keyboard focus pauses the loop (a mouse click or hover does not)
-      zone.addEventListener("focusin", function (e) {
-        var kb = false; try { kb = e.target.matches(":focus-visible"); } catch (x) {}
-        if (kb && e.target !== pauseBtn) { focused = true; restart(); }
-      });
-      zone.addEventListener("focusout", function () { if (focused) { focused = false; restart(); } });
       if ("IntersectionObserver" in window) {
         new IntersectionObserver(function (en) { onScreen = en[0].isIntersecting; restart(); }, { threshold: .15 }).observe(zone);
       } else { onScreen = true; }
@@ -269,8 +273,8 @@
   }
   if (hasReward()) markReward();
 
-  /* Scratch cards (homepage section and the welcome pop-up). Revealing one reveals them all. */
-  var cards = [];
+  /* Scratch scratchCards (homepage section and the welcome pop-up). Revealing one reveals them all. */
+  var scratchCards = [];
   function setupScratch(sc) {
     var canvas = sc.querySelector("canvas");
     var ctx = canvas.getContext("2d");
@@ -343,7 +347,7 @@
       if (!silent) {
         burst();
         if (live) live.textContent = "Revealed: " + CFG.reward + " off. You pay " + CFG.priceReward + " instead of " + CFG.price + ". Your reward is saved and added to your pre-order.";
-        cards.forEach(function (c) { if (c.reveal !== reveal) c.reveal(true); });
+        scratchCards.forEach(function (c) { if (c.reveal !== reveal) c.reveal(true); });
       }
     }
     canvas.addEventListener("pointerdown", function (e) {
@@ -365,13 +369,13 @@
     if (btn) btn.addEventListener("click", function () { reveal(); });
     return { reveal: reveal, paint: paintFoil, untouched: function () { return moves === 0; } };
   }
-  document.querySelectorAll("[data-scratch]").forEach(function (sc) { cards.push(setupScratch(sc)); });
-  if (hasReward()) cards.forEach(function (c) { c.reveal(true); });
+  document.querySelectorAll("[data-scratch]").forEach(function (sc) { scratchCards.push(setupScratch(sc)); });
+  if (hasReward()) scratchCards.forEach(function (c) { c.reveal(true); });
   else {
-    cards.forEach(function (c) { c.paint(); });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { cards.forEach(function (c) { if (c.untouched()) c.paint(); }); });
+    scratchCards.forEach(function (c) { c.paint(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { scratchCards.forEach(function (c) { if (c.untouched()) c.paint(); }); });
     var rw;
-    window.addEventListener("resize", function () { clearTimeout(rw); rw = setTimeout(function () { cards.forEach(function (c) { if (c.untouched()) c.paint(); }); }, 150); });
+    window.addEventListener("resize", function () { clearTimeout(rw); rw = setTimeout(function () { scratchCards.forEach(function (c) { if (c.untouched()) c.paint(); }); }, 150); });
   }
 
   /* Welcome pop-up: once per visitor, only if the reward isn't revealed yet */
@@ -380,7 +384,7 @@
   if (promo && !hasReward() && store.get(PROMO_KEY) !== "1") {
     var promoCard = promo.querySelector(".promo-card");
     var lastFocus = null;
-    var promoScratch = cards.filter(function (c, i) { return promo.contains(document.querySelectorAll("[data-scratch]")[i]); })[0];
+    var promoScratch = scratchCards.filter(function (c, i) { return promo.contains(document.querySelectorAll("[data-scratch]")[i]); })[0];
     function focusables() { return Array.prototype.slice.call(promoCard.querySelectorAll("a[href],button:not([disabled])")).filter(function (el) { return el.offsetParent !== null; }); }
     function onKey(e) {
       if (e.key === "Escape") { e.preventDefault(); closePromo(); return; }

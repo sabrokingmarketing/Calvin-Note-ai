@@ -669,7 +669,9 @@ h1,h2,h3{text-transform:capitalize}
   /* steps: one clean card, single row of tabs */
   .steps-stage{height:clamp(240px,62vw,300px)}
   .step-card{width:92%}
-  .step-card[data-pos="1"],.step-card[data-pos="2"]{opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.94)}
+  .steps-stage{overflow:hidden;margin-inline:calc(var(--gutter) * -1)}
+  .step-card[data-pos="1"]{transform:translate(62%,-50%) scale(.94);pointer-events:none}
+  .step-card[data-pos="2"]{transform:translate(-162%,-50%) scale(.94);pointer-events:none}
   .step-card .ui{width:84%;top:60%}
   .step-card .pill{left:14px;top:14px;font-size:13px;padding:6px 12px}
   .step-ctrl{flex-wrap:nowrap;gap:6px}
@@ -707,3 +709,7 @@ h1,h2,h3{text-transform:capitalize}
   /* close band */
   .close{padding:96px 0}
 }
+
+/* Steps carousel: a wrapping card moves without animation, then fades back in */
+.step-card{transition:transform .7s cubic-bezier(.65,0,.35,1),opacity .5s var(--ease-out),filter .6s}
+.step-card.jump{transition:none!important;opacity:0}
