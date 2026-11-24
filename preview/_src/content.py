@@ -7,7 +7,7 @@ Edit this file, then run:  python3 preview/_src/build.py
 Anything marked TODO is missing information. The site shows a safe stand-in until it is filled in.
 """
 
-BRAND = "Note AI"  # TODO: confirm the final product name (temporary, easy to replace)
+BRAND = "HiNote Book"
 TAGLINE = "The leather notebook that keeps your meeting notes"
 BRAND_BLUE = "#1f5bd6"
 
@@ -21,11 +21,11 @@ WHATSAPP_DISPLAY = "+27 XX XXX XXXX"   # TODO
 PHONE_TEL = "+27XXXXXXXXX"
 PHONE_DISPLAY = "+27 XX XXX XXXX"      # TODO
 # TODO: real email inbox for pre-orders
-EMAIL = "hello@noteai.example"
+EMAIL = "hello@hinotebook.example"
 # TODO: city or area the team works from (district only)
 LOCATION = "South Africa"
 # TODO: live domain, used for sitemap.xml and share links
-DOMAIN = "https://www.noteai.example"
+DOMAIN = "https://www.hinotebook.example"
 # TODO: business hours
 HOURS = "Monday to Friday, during business hours"
 
@@ -96,7 +96,7 @@ FAQ_MORE = [
 
 # Open items for the owner (also listed in the build report)
 TODO = [
-    "Final product name (currently 'Note AI')",
+    "Check the HiNote Book name is free to use (it is close to the HiNoter app)",
     "WhatsApp number (international format, e.g. 27821234567)",
     "Phone number for tap-to-call",
     "Email address for pre-orders",

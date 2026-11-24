@@ -18,7 +18,7 @@ def ui(name, cls=""):
 
 MARK = ('<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" '
         'stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/>'
-        '<path d="M3.5 7.5 12 13l8.5-5.5"/></svg>')
+        '<path d="M3.5 7.5 12 13l8.5-5.5"/><circle cx="12" cy="16.4" r="1.35" fill="#fff" stroke="none"/></svg>')
 ARR = '<span class="arr" aria-hidden="true">→</span>'
 
 
@@ -282,7 +282,7 @@ def hub():
         cls = "node" + (" faint" if faint else "") + (" hide-sm" if hide else "")
         out += f'<span class="{cls}" style="left:{x}%;top:{y}%"><img src="assets/icons/{k}.svg" alt="{e(names[k])}" width="28" height="28"></span>'
     return f"""<div class="hub"><svg class="lines" aria-hidden="true"></svg>
-  <div class="core"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5 12 13l8.5-5.5"/></svg><span class="sr-only">{e(S.BRAND)}</span></div>
+  <div class="core"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5 12 13l8.5-5.5"/><circle cx="12" cy="16.4" r="1.35" fill="#fff" stroke="none"/></svg><span class="sr-only">{e(S.BRAND)}</span></div>
   {out}</div>"""
 
 
@@ -697,5 +697,5 @@ if __name__ == "__main__":
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">'
         '<stop offset="0" stop-color="#4a8cf5"/><stop offset="1" stop-color="#1f5bd6"/></linearGradient></defs>'
         '<rect width="32" height="32" rx="8" fill="url(#g)"/><g fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">'
-        '<rect x="6.5" y="9" width="19" height="14" rx="2.5"/><path d="M7 11.5 16 17l9-5.5"/></g></svg>')
+        '<rect x="6.5" y="9" width="19" height="14" rx="2.5"/><path d="M7 11.5 16 17l9-5.5"/></g><circle cx="16" cy="20.3" r="1.7" fill="#fff"/></svg>')
     print("built", len(PAGES), "pages")
