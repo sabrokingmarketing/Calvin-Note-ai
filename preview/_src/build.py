@@ -292,11 +292,11 @@ def scratch_card():
     <span class="eyebrow">Rewards</span>
     <h2>Scratch the card for {S.REWARD} off your pre-order</h2>
     <p class="lede">A thank-you for being early. Scratch the card to reveal your reward.</p>
-    <ol>
-      <li><span>Scratch the card with your finger or mouse.</span></li>
-      <li><span>Your {S.REWARD} reward is saved on this device and added to your pre-order form.</span></li>
-      <li><span>Our team applies it when they contact you to confirm your order.</span></li>
-    </ol>
+    <ul class="reward-steps">
+      <li><b>Scratch</b><span>Use your finger or mouse.</span></li>
+      <li><b>Saved</b><span>Added to your pre-order automatically.</span></li>
+      <li><b>Applied</b><span>Our team confirms it with your order.</span></li>
+    </ul>
   </div>
   <div>
     <div class="scratch" data-scratch>
@@ -388,7 +388,7 @@ def home():
   <div class="s-head"><h2>Before, during and after the meeting</h2><p>The assistant does the admin around each call, so you can put the pen down and listen.</p></div>
   <div class="steps-stage" data-steps>{cards}</div>
   <div class="step-copy">
-    <div class="step-tabs" role="tablist" aria-label="Meeting stages" data-steps-tabs>{tabs}</div>
+    <div class="step-ctrl"><div class="step-tabs" role="tablist" aria-label="Meeting stages" data-steps-tabs>{tabs}</div><button class="step-pause" type="button" aria-pressed="false" aria-label="Pause automatic steps" data-steps-pause><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.6A1 1 0 0 0 8 5.5z"/></svg></button></div>
     <div style="margin-top:22px">{panels}</div>
   </div>
 </div></section>

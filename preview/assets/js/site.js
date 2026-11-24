@@ -113,7 +113,42 @@
       });
     }
     show(0);
-    if (stepList) stepList.addEventListener("tabchange", function (e) { show(e.detail); });
+    /* Auto-advance every 5 seconds. Pauses on hover, keyboard focus, the pause button,
+       when off screen or in a background tab, and never runs under reduced motion. */
+    var ctrl = document.querySelector(".step-ctrl");
+    var pauseBtn = document.querySelector("[data-steps-pause]");
+    var stepTabs = stepList ? Array.prototype.slice.call(stepList.querySelectorAll("[role=tab]")) : [];
+    var cur = 0, timer = null, userPaused = reduce, hovering = false, focused = false, onScreen = false;
+    if (reduce && pauseBtn) { pauseBtn.setAttribute("aria-pressed", "true"); pauseBtn.setAttribute("aria-label", "Play automatic steps"); }
+    function canRun() { return !userPaused && !hovering && !focused && onScreen && !document.hidden; }
+    function restart() {
+      clearTimeout(timer);
+      if (!ctrl) return;
+      ctrl.classList.remove("run", "hold");
+      void ctrl.offsetWidth;
+      if (!canRun()) return;
+      ctrl.classList.add("run");
+      timer = setTimeout(function () { var n = stepTabs[(cur + 1) % stepTabs.length]; if (n) n.click(); }, 5000);
+    }
+    if (stepList) stepList.addEventListener("tabchange", function (e) { cur = e.detail; show(cur); restart(); });
+    var zone = stack.closest("section");
+    if (zone) {
+      zone.addEventListener("mouseenter", function () { hovering = true; restart(); });
+      zone.addEventListener("mouseleave", function () { hovering = false; restart(); });
+      zone.addEventListener("focusin", function (e) { if (e.target !== pauseBtn) { focused = true; restart(); } });
+      zone.addEventListener("focusout", function () { focused = false; restart(); });
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (en) { onScreen = en[0].isIntersecting; restart(); }, { threshold: .35 }).observe(zone);
+      } else { onScreen = true; }
+    }
+    document.addEventListener("visibilitychange", restart);
+    if (pauseBtn) pauseBtn.addEventListener("click", function () {
+      userPaused = !userPaused;
+      pauseBtn.setAttribute("aria-pressed", String(userPaused));
+      pauseBtn.setAttribute("aria-label", userPaused ? "Play automatic steps" : "Pause automatic steps");
+      restart();
+    });
+    restart();
     cards.forEach(function (c, i) {
       c.addEventListener("click", function () {
         var t = stepList && stepList.querySelectorAll("[role=tab]")[i];

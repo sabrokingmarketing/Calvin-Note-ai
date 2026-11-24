@@ -243,7 +243,20 @@ p{margin:0;text-wrap:pretty}
 .step-copy{text-align:center;max-width:34rem;margin:clamp(28px,5vh,48px) auto 0;min-height:150px}
 .step-copy h3{font-size:clamp(1.7rem,3vw,2.4rem)}
 .step-copy p{color:var(--muted);margin-top:12px;font-size:1.075rem}
-.step-tabs{display:flex;gap:8px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+.step-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.step-ctrl{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:22px}
+.step-tab{position:relative;overflow:hidden}
+.step-tab[aria-selected="true"]::after{content:"";position:absolute;left:14px;right:14px;bottom:7px;height:2px;border-radius:2px;background:rgba(255,255,255,.6);transform-origin:left;transform:scaleX(0)}
+.step-ctrl.run .step-tab[aria-selected="true"]::after{animation:stepfill 5s linear forwards}
+.step-ctrl.hold .step-tab[aria-selected="true"]::after{animation-play-state:paused}
+@keyframes stepfill{to{transform:scaleX(1)}}
+.step-pause{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;cursor:pointer;color:var(--ink);transition:border-color .18s,transform .18s var(--ease-out)}
+.step-pause:hover{border-color:#b9cdf3}
+.step-pause:active{transform:scale(.95)}
+.step-pause svg{width:16px;height:16px;fill:currentColor}
+.step-pause .i-play{display:none}
+.step-pause[aria-pressed="true"] .i-play{display:block}
+.step-pause[aria-pressed="true"] .i-pause{display:none}
 .step-tab{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:15px;transition:background-color .18s,border-color .18s,color .18s}
 .step-tab:hover{border-color:#b9cdf3}
 .step-tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
@@ -347,9 +360,15 @@ p{margin:0;text-wrap:pretty}
 .reward{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,80px);align-items:center}
 .reward h2{font-size:clamp(2rem,4vw,3.2rem)}
 .reward .lede{color:var(--muted);margin-top:16px;font-size:1.075rem}
-.reward ol{margin:24px 0 0;padding:0;list-style:none;counter-reset:s}
-.reward ol li{counter-increment:s;display:flex;gap:14px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line)}
-.reward ol li::before{content:counter(s);font-family:var(--font-head);font-weight:600;color:var(--blue-ink);min-width:1ch}
+
+
+
+.reward-steps{list-style:none;margin:32px 0 0;padding:0;display:grid;gap:22px;position:relative}
+.reward-steps li:not(:last-child)::after{content:"";position:absolute;left:10px;top:24px;bottom:-20px;width:1px;background:rgba(31,91,214,.22)}
+.reward-steps li{position:relative;padding-left:36px;display:grid;gap:2px}
+.reward-steps li::before{content:"";position:absolute;left:5px;top:7px;width:11px;height:11px;border-radius:50%;background:var(--blue-2);box-shadow:0 0 0 5px rgba(31,91,214,.12)}
+.reward-steps b{font-family:var(--font-head);font-weight:500;font-size:1.15rem;letter-spacing:-.02em;color:var(--ink)}
+.reward-steps span{color:var(--muted);font-size:15.5px}
 .scratch{position:relative;width:100%;max-width:520px;margin-inline:auto;aspect-ratio:1.42/1;border-radius:26px;user-select:none;-webkit-user-select:none}
 .scratch-under{position:absolute;inset:0;border-radius:inherit;overflow:hidden;background:#fff;color:var(--sand-ink);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;box-shadow:var(--shadow-2)}
 .scratch-under::before{content:"";position:absolute;inset:10px;border-radius:18px;border:1.5px dashed #d3dae5;pointer-events:none}
@@ -548,3 +567,7 @@ a.c-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-1)}
 /* keep stacked/peeking visuals from widening the page */
 main>section{overflow-x:clip}
 .field input[type=checkbox]{min-height:0;padding:0;width:22px;height:22px}
+
+/* Headings in Title Case (owner request); FAQ questions stay as sentences */
+h1,h2,h3{text-transform:capitalize}
+.acc-item h3,.doc-body h3{text-transform:none}
