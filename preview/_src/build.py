@@ -441,7 +441,7 @@ def home():
 
 <section class="section"><div class="wrap">{lifestyle()}</div></section>
 
-<section class="section ground-surface"><div class="wrap">{inside()}</div></section>
+<section class="section ground-surface"><div class="wrap">{inside("folio-table", "The tan folio lying open on a long boardroom table, with a phone in its pocket, a cream notebook and a pen beside it, and a city view through the windows", 1600, 2142)}</div></section>
 
 <section class="section ground-soft"><div class="wrap">
   <div class="s-head"><h2>Quiet the noise. Keep the details.</h2></div>
