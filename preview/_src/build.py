@@ -433,7 +433,7 @@ def home():
                   f'<span class="bg" style="background-image:url(assets/img/{bg}-1200.webp)"></span>'
                   f'<span class="pill">{pill} · {when}</span><span class="ui"><h4>{e(h)}</h4><ul>{lis}</ul></span></button>')
         tabs += (f'<button class="step-tab" role="tab" id="st-t{i}" aria-selected="{"true" if i == 0 else "false"}" '
-                 f'aria-controls="st-p{i}" tabindex="{0 if i == 0 else -1}">{when} the meeting</button>')
+                 f'aria-controls="st-p{i}" tabindex="{0 if i == 0 else -1}">{when}<span class="long"> the meeting</span></button>')
     panels = "".join(
         f'<div role="tabpanel" id="st-p{i}" aria-labelledby="st-t{i}" {"hidden" if i else ""}><h3>{e(h)}</h3><p>{e(p)}</p></div>'
         for i, (_, _, h, p, _, _) in enumerate(steps))
