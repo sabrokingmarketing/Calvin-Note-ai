@@ -65,6 +65,8 @@ INTEGRATIONS = [
 ]
 
 FAQ_HOME = [
+    ("Where do my notes go after a meeting?",
+     "Straight to your email inbox. When the meeting ends, the assistant sends you the summary, action items and a draft follow-up email to review before you share anything."),
     ("Is the AI assistant available today?",
      "Not yet. Pre-orders are open now. When our team contacts you about your pre-order, they will share the timing for the folio and for assistant access."),
     ("How does the R1 500 pre-order work?",

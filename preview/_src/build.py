@@ -25,7 +25,7 @@ def photo(stem, alt, w, h, sizes="(max-width: 860px) 92vw, 760px", cls="", style
 
 def lifestyle(stem="life-meeting", alt="A woman in an office holding a tan HiNote Book folio and a pencil, with colleagues working at a table behind her",
               w=1536, h=1024, eyebrow="In the room", h2="Made for the meeting room",
-              p="Walk in with the folio under your arm and your phone tucked inside. Write down what you want to remember. The assistant keeps the rest.",
+              p="Walk in with the folio under your arm and your phone tucked inside. Write down what you want to remember. Your notes arrive in your inbox when the meeting ends.",
               pos=""):
     style = f"object-position:{pos}" if pos else ""
     return f"""<div class="feature-photo">
@@ -251,7 +251,7 @@ def notes_examples(idp="ex"):
   <div>
     <span class="eyebrow">After the meeting</span>
     <h2>Notes you can use the minute the call ends</h2>
-    <p class="lede">A short summary, a clear list of who does what, and a follow-up email that is ready to check and send. Below is an example of what the assistant is designed to produce.</p>
+    <p class="lede">When the meeting ends, every note is sent straight to your inbox for you to review: a short summary, who does what, and a follow-up email ready to check and send. Here is an example.</p>
     <div class="tablist" role="tablist" aria-label="Example outputs">
       <button class="tab" role="tab" id="{idp}-t1" aria-selected="true" aria-controls="{idp}-p1">Summary</button>
       <button class="tab" role="tab" id="{idp}-t2" aria-selected="false" aria-controls="{idp}-p2" tabindex="-1">Action items</button>
@@ -259,7 +259,7 @@ def notes_examples(idp="ex"):
     </div>
   </div>
   <div class="doc">
-    <div class="doc-head">{ui("file-text")}Launch check-in · 32 min<span class="demo-tag">Example</span></div>
+    <div class="doc-head">{ui("mail")}In your inbox · Notes: Launch check-in<span class="demo-tag">Example</span></div>
     <div class="doc-body">
       <div class="doc-panel" role="tabpanel" id="{idp}-p1" aria-labelledby="{idp}-t1" tabindex="0">
         <h3>Launch check-in</h3><p class="meta">Thandi N., Pieter V., Aisha K.</p>
@@ -376,8 +376,8 @@ def home():
          ["Launch check-in · 10:00", "Supplier call · 14:30", "Board prep · Thu"], "sky-soft"),
         ("Step 2", "During", "Stay in the conversation", "The assistant listens and writes as people talk, marking decisions, actions and open questions.",
          ["Decision: launch on 3 March", "Action: Pieter, pricing sheet", "Question: who signs?"], "sky-hero"),
-        ("Step 3", "After", "Send the follow-up", "A summary, the action list and a draft email are ready to check, change and send.",
-         ["Summary ready", "4 action items", "Follow-up email drafted"], "sky-soft"),
+        ("Step 3", "After", "Check your inbox", "Every note is sent straight to your inbox when the meeting ends: the summary, the action list and a draft follow-up, ready for you to review.",
+         ["Notes sent to your inbox", "4 action items", "Follow-up email drafted"], "sky-soft"),
     ]
     cards, tabs = "", ""
     for i, (pill, when, h, p, items, bg) in enumerate(steps):
@@ -395,7 +395,7 @@ def home():
 <section class="sky hero"><div class="wrap" data-enter>
   <span class="hero-fact"><b>New</b>Pre-orders open · {S.PRICE}</span>
   <h1>The leather notebook that takes your meeting notes</h1>
-  <p class="lede">A stitched folio for your desk and an AI assistant that listens, writes the summary and drafts the follow-up, so you can stay in the conversation.</p>
+  <p class="lede">A stitched folio for your desk and an AI assistant that takes every note and sends them straight to your inbox after the meeting, so you can stay in the conversation.</p>
   <div class="actions"><a class="btn btn-primary" href="pre-order.html">Pre-order for {S.PRICE} {ARR}</a><a class="btn btn-white" href="how-it-works.html">See how it works</a></div>
 </div>
 <div class="stage">{app_frame()}<img class="folio-float" src="assets/img/folio-trio-1600.webp" srcset="assets/img/folio-trio-800.webp 800w, assets/img/folio-trio-1600.webp 1400w" sizes="(max-width: 700px) 56vw, 460px" width="1400" height="946" alt="HiNote Book folios in tan, black and blush" decoding="async"></div>
@@ -427,7 +427,7 @@ def home():
 </div></section>
 
 <section class="section ground-surface"><div class="wrap">
-  <div class="s-head"><h2>Before, during and after the meeting</h2><p>The assistant does the admin around each call, so you can put the pen down and listen.</p></div>
+  <div class="s-head"><h2>Before, during and after the meeting</h2><p>The assistant takes the notes, then sends them to your inbox when the call ends. You just review them.</p></div>
   <div class="steps-stage" data-steps>{cards}</div>
   <div class="step-copy">
     <div class="step-ctrl"><div class="step-tabs" role="tablist" aria-label="Meeting stages" data-steps-tabs>{tabs}</div><button class="step-pause" type="button" aria-pressed="false" aria-label="Pause automatic steps" data-steps-pause><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.6A1 1 0 0 0 8 5.5z"/></svg></button></div>
@@ -461,7 +461,7 @@ def home():
 {close_band()}
 """
     return page("index.html", "Home",
-                f"{S.BRAND} pairs a stitched leather folio with an AI meeting assistant for notes, summaries, action items and follow-up emails. Pre-order for {S.PRICE}.",
+                f"{S.BRAND} pairs a stitched leather folio with an AI meeting assistant that takes every note and sends it to your inbox after the meeting. Pre-order for {S.PRICE}.",
                 body)
 
 
@@ -469,7 +469,7 @@ def product():
     cards = [
         ("notebook-pen", "Paper for your own thinking", "Sketch, jot and doodle in the folio. Writing by hand is still the best way to think in a meeting."),
         ("audio-lines", "The assistant for the record", "It listens to the call and keeps the full record, so your notes can be about ideas, not minutes."),
-        ("send", "One place for the follow-up", "Summaries, actions and the draft email sit together, ready to check and share."),
+        ("mail", "Notes in your inbox", "After each meeting, the summary, actions and a draft follow-up land in your inbox, ready to review."),
     ]
     c = "".join(f'<div class="card"><span class="ic">{ui(i)}</span><h3>{e(h)}</h3><p>{e(p)}</p></div>' for i, h, p in cards)
     specs = [
@@ -512,8 +512,8 @@ def how():
          ["Pick meetings from your calendar", "See the agenda and last meeting's actions", "Tell attendees the meeting will be captured"]),
         ("During", "Listen, don't type", "The assistant joins the call or listens in the room and writes as people talk.",
          ["Live transcript with speaker names", "Decisions, actions and risks marked as they happen", "Your handwritten notes stay in the folio"]),
-        ("After", "Share what matters", "Notes are ready when the call ends. Check them, change them, send them.",
-         ["Short summary and full notes", "Action list with owners and dates", "Follow-up email drafted for you"]),
+        ("After", "Review from your inbox", "When the call ends, every note is sent straight to your inbox. Review it, change anything, then share it.",
+         ["Summary and full notes emailed to you", "Action list with owners and dates", "Follow-up email drafted for you"]),
     ]
     t = ""
     for when, h, p, items in tl:
@@ -527,7 +527,7 @@ def how():
     ]
     u = "".join(f'<div class="uc"><span class="ic">{ui(i)}</span><h3>{e(h)}</h3><p>{e(p)}</p></div>' for i, h, p in uc)
     body = f"""
-{page_hero("How it works", "Before, during and after every meeting", "Three simple stages. You stay in the conversation; the assistant does the admin.")}
+{page_hero("How it works", "Before, during and after every meeting", "Three simple stages. You stay in the conversation; your notes arrive in your inbox afterwards.")}
 <section class="section"><div class="wrap"><div class="timeline">{t}</div></div></section>
 <section class="section ground-surface"><div class="wrap">{lifestyle("folio-boardroom", "The tan folio lying open on a boardroom table, with a phone in its pocket, a pen and a notebook, chairs and a city view behind", 1600, 2142, "Set up in seconds", "Open the folio and start the meeting", "Your phone sits in its pocket, your notebook lies flat and your pen is in its loop. Nothing to set up on the table.", "50% 68%")}</div></section>
 <section class="section ground-surface"><div class="wrap">{notes_examples("hw")}</div></section>
@@ -538,7 +538,7 @@ def how():
 {close_band()}
 """
     return page("how-it-works.html", "How it works",
-                f"How {S.BRAND} works before, during and after a meeting: calendar, live transcript, summary, action items and a drafted follow-up email.",
+                f"How {S.BRAND} works: it takes every note during the meeting and sends the summary, action items and a draft follow-up to your inbox afterwards.",
                 body)
 
 
@@ -589,7 +589,7 @@ def pricing():
     </ol></div>
   </div>
 </div></section>
-<section class="section ground-surface"><div class="wrap">{faq_block(S.FAQ_HOME[1:2] + S.FAQ_HOME[4:5] + S.FAQ_MORE[3:6], "pf", "Questions about pre-ordering")}</div></section>
+<section class="section ground-surface"><div class="wrap">{faq_block(S.FAQ_HOME[2:3] + S.FAQ_HOME[5:6] + S.FAQ_MORE[3:6], "pf", "Questions about pre-ordering")}</div></section>
 {close_band()}
 """
     return page("pricing.html", "Pricing",
