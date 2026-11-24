@@ -25,7 +25,7 @@ def photo(stem, alt, w, h, sizes="(max-width: 860px) 92vw, 760px", cls="", style
 
 def lifestyle(stem="life-meeting", alt="A woman in an office holding a tan HiNote Book folio and a pencil, with colleagues working at a table behind her",
               w=1536, h=1024, eyebrow="In the room", h2="Made for the meeting room",
-              p="Walk in with the folio under your arm and your phone tucked inside. Write down what you want to remember. Your notes arrive in your inbox when the meeting ends.",
+              p="Walk in with the folio under your arm. The AI listening device is built in, so you just write down what you want to remember. Your notes arrive in your inbox when the meeting ends.",
               pos=""):
     style = f"object-position:{pos}" if pos else ""
     return f"""<div class="feature-photo">
@@ -39,9 +39,10 @@ def lifestyle(stem="life-meeting", alt="A woman in an office holding a tan HiNot
 </div>"""
 
 
-def inside(slides=None, stem="folio-open", alt="The tan folio lying open on a wooden desk, showing a phone in a pocket with a camera window, a pen loop and a cream notebook under the snap flap", w=1600, h=2142):
+def inside(slides=None, stem="folio-open", alt="The tan folio lying open on a wooden desk, showing its built-in AI listening device, a pen loop and a cream notebook under the snap flap", w=1600, h=2142):
     items = [
-        ("Phone pocket", "Holds your phone, with a window for the camera."),
+        ("AI listening device", "Built into the folio. It listens during the meeting, then your notes go to your inbox."),
+        ("Power bank", "Included, to keep the listening device charged."),
         ("Notebook", "Paper for the thoughts you want to keep by hand."),
         ("Pen loop", "Your pen stays with your notes."),
         ("Snap closure", "The flap closes with a press stud."),
@@ -51,7 +52,7 @@ def inside(slides=None, stem="folio-open", alt="The tan folio lying open on a wo
   <div>
     <span class="eyebrow">Inside the folio</span>
     <h2>Everything you carry into a meeting, in one place</h2>
-    <p class="lede">Open the flap and your phone, notebook and pen are laid out side by side, ready when the meeting starts.</p>
+    <p class="lede">Open the flap and the listening device, notebook and pen are side by side, ready when the meeting starts.</p>
     <ul class="dot-list">{lis}</ul>
   </div>
   {slideshow(slides) if slides else '<div class="inside-img">' + photo(stem, alt, w, h, "(max-width: 860px) 92vw, 560px") + '</div>'}
@@ -159,7 +160,7 @@ def footer():
     <div class="f-top">
       <div>
         <a class="brand" href="index.html" aria-label="{e(S.BRAND)} home"><img class="brand-logo" src="assets/img/logo.png" alt="{e(S.BRAND)}" width="310" height="200"></a>
-        <p>A stitched folio for your desk and an AI assistant for the record. Made for people who live in meetings.</p>
+        <p>A stitched folio with a built-in AI listening device. Made for people who live in meetings.</p>
         <a class="btn btn-primary btn-sm f-cta" href="pre-order.html">Pre-order for {S.PRICE} {ARR}</a>
       </div>
       <div class="f-col"><h2>Product</h2><ul>
@@ -417,7 +418,7 @@ def home():
 <section class="sky hero"><div class="wrap" data-enter>
   <span class="hero-fact"><b>New</b>Pre-orders open · {S.PRICE}</span>
   <h1>The leather notebook that takes your meeting notes</h1>
-  <p class="lede">A stitched folio for your desk and an AI assistant that takes every note and sends them straight to your inbox after the meeting, so you can stay in the conversation.</p>
+  <p class="lede">A stitched folio with a built-in AI listening device. It takes every note and sends them straight to your inbox after the meeting, so you can stay in the conversation.</p>
   <div class="actions"><a class="btn btn-primary" href="pre-order.html">Pre-order for {S.PRICE} {ARR}</a><a class="btn btn-white" href="how-it-works.html">See how it works</a></div>
 </div>
 <div class="stage">{app_frame()}<img class="folio-float" src="assets/img/folio-trio-1600.webp" srcset="assets/img/folio-trio-800.webp 800w, assets/img/folio-trio-1600.webp 1400w" sizes="(max-width: 700px) 56vw, 460px" width="1400" height="946" alt="HiNote Book folios in tan, black and blush" decoding="async"></div>
@@ -464,9 +465,9 @@ def home():
 <section class="section"><div class="wrap">{lifestyle()}</div></section>
 
 <section class="section ground-surface"><div class="wrap">{inside([
-    ("folio-travertine", "The tan folio lying open on a travertine stone slab, with a phone in its pocket, a cream notebook and a gold pen beside it"),
-    ("folio-table", "The tan folio lying open on a long boardroom table, with a phone in its pocket, a cream notebook and a pen beside it, and a city view through the windows"),
-    ("folio-open", "The tan folio lying open on a wooden desk, showing a phone in a pocket with a camera window, a pen loop and a cream notebook under the snap flap"),
+    ("folio-travertine", "The tan folio lying open on a travertine stone slab, with its built-in AI listening device, a cream notebook and a gold pen beside it"),
+    ("folio-table", "The tan folio lying open on a long boardroom table, with its built-in AI listening device, a cream notebook and a pen beside it, and a city view through the windows"),
+    ("folio-open", "The tan folio lying open on a wooden desk, showing its built-in AI listening device, a pen loop and a cream notebook under the snap flap"),
 ])}</div></section>
 
 <section class="section ground-soft"><div class="wrap">
@@ -494,14 +495,15 @@ def home():
 def product():
     cards = [
         ("notebook-pen", "Paper for your own thinking", "Sketch, jot and doodle in the folio. Writing by hand is still the best way to think in a meeting."),
-        ("audio-lines", "The assistant for the record", "It listens to the call and keeps the full record, so your notes can be about ideas, not minutes."),
+        ("audio-lines", "A listening device built in", "The device inside the folio listens to the meeting and keeps the full record, so your own notes can be about ideas, not minutes."),
         ("mail", "Notes in your inbox", "After each meeting, the summary, actions and a draft follow-up land in your inbox, ready to review."),
     ]
     c = "".join(f'<div class="card"><span class="ic">{ui(i)}</span><h3>{e(h)}</h3><p>{e(p)}</p></div>' for i, h, p in cards)
     specs = [
         ("Design", "Envelope flap with stitched edges"),
         ("Finish", "Soft leather finish"),
-        ("Inside", "Phone pocket with camera window, notebook, pen loop"),
+        ("Inside", "Built-in AI listening device, notebook, pen loop"),
+        ("In the box", "Folio with built-in listening device, and a power bank"),
         ("Closure", "Snap-button flap"),
         ("Colours", "Tan, Onyx, Stone, Blush"),
         ("Pre-order price", S.PRICE + " once-off"),
@@ -512,7 +514,7 @@ def product():
     body = f"""
 {page_hero("The notebook", "A stitched folio with an assistant inside the work", "Paper for the ideas you want to keep by hand. An AI assistant for everything that was said.", True, '<div class="hero-shot float">' + photo("folio-trio", "Three HiNote Book folios side by side in tan, black and blush", 1400, 946, "(max-width: 960px) 92vw, 880px") + '</div>')}
 <section class="section ground-sand"><div class="wrap">{showcase("Choose the colour you'll carry every day", "prod-img")}</div></section>
-<section class="section"><div class="wrap">{inside(None, "folio-boardroom", "The tan folio lying open on a boardroom table, with a phone in its pocket, a pen and a notebook, chairs and a city view behind", 1600, 2142)}</div></section>
+<section class="section"><div class="wrap">{inside(None, "folio-boardroom", "The tan folio lying open on a boardroom table, with its built-in AI listening device, a pen and a notebook, chairs and a city view behind", 1600, 2142)}</div></section>
 <section class="section ground-surface"><div class="wrap">{lifestyle()}</div></section>
 <section class="section"><div class="wrap">
   <div class="s-head"><h2>Paper and software, each doing its part</h2><p>The folio is for you. The assistant is for the record.</p></div>
@@ -536,7 +538,7 @@ def how():
     tl = [
         ("Before", "Connect and prepare", "Link your calendar and pick the meetings to capture.",
          ["Pick meetings from your calendar", "See the agenda and last meeting's actions", "Tell attendees the meeting will be captured"]),
-        ("During", "Listen, don't type", "The assistant joins the call or listens in the room and writes as people talk.",
+        ("During", "Listen, don't type", "The listening device built into the folio captures the meeting and the assistant writes as people talk.",
          ["Live transcript with speaker names", "Decisions, actions and risks marked as they happen", "Your handwritten notes stay in the folio"]),
         ("After", "Review from your inbox", "When the call ends, every note is sent straight to your inbox. Review it, change anything, then share it.",
          ["Summary and full notes emailed to you", "Action list with owners and dates", "Follow-up email drafted for you"]),
@@ -555,7 +557,7 @@ def how():
     body = f"""
 {page_hero("How it works", "Before, during and after every meeting", "Three simple stages. You stay in the conversation; your notes arrive in your inbox afterwards.")}
 <section class="section"><div class="wrap"><div class="timeline">{t}</div></div></section>
-<section class="section ground-surface"><div class="wrap">{lifestyle("folio-boardroom", "The tan folio lying open on a boardroom table, with a phone in its pocket, a pen and a notebook, chairs and a city view behind", 1600, 2142, "Set up in seconds", "Open the folio and start the meeting", "Your phone sits in its pocket, your notebook lies flat and your pen is in its loop. Nothing to set up on the table.", "50% 68%")}</div></section>
+<section class="section ground-surface"><div class="wrap">{lifestyle("folio-boardroom", "The tan folio lying open on a boardroom table, with its built-in AI listening device, a pen and a notebook, chairs and a city view behind", 1600, 2142, "Set up in seconds", "Open the folio and start the meeting", "The listening device is built in, your notebook lies flat and your pen is in its loop. Nothing to set up on the table.", "50% 68%")}</div></section>
 <section class="section ground-surface"><div class="wrap">{notes_examples("hw")}</div></section>
 <section class="section"><div class="wrap">
   <div class="s-head"><h2>Made for people who live in meetings</h2><p>If your calendar is full of calls, this is for you.</p></div>
@@ -595,7 +597,8 @@ def integrations():
 
 def pricing():
     checks = [
-        "The folio in the colour you choose",
+        "The folio in the colour you choose, with its built-in AI listening device",
+        "A power bank to keep it charged",
         "A place on the early-access list for the assistant",
         f"Your {S.REWARD} scratch-card reward, if you've revealed it",
         "A call or message from our team to confirm everything",
@@ -615,7 +618,7 @@ def pricing():
     </ol></div>
   </div>
 </div></section>
-<section class="section ground-surface"><div class="wrap">{faq_block(S.FAQ_HOME[2:3] + S.FAQ_HOME[5:6] + S.FAQ_MORE[3:6], "pf", "Questions about pre-ordering")}</div></section>
+<section class="section ground-surface"><div class="wrap">{faq_block(S.FAQ_HOME[2:3] + S.FAQ_MORE[0:1] + S.FAQ_HOME[5:6] + S.FAQ_MORE[5:8], "pf", "Questions about pre-ordering")}</div></section>
 {close_band()}
 """
     return page("pricing.html", "Pricing",

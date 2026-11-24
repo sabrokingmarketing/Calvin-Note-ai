@@ -91,6 +91,10 @@ FAQ_HOME = [
 ]
 
 FAQ_MORE = [
+    ("What comes in the box?",
+     "The folio with its built-in AI listening device, and a power bank to keep the device charged."),
+    ("Do I need my phone for it to listen?",
+     "No. The AI listening device is built into the folio, so you just open it and start the meeting."),
     ("Does everyone in the meeting need to agree to being recorded?",
      "Yes. Tell people at the start when a meeting is being captured. South African law (POPIA) expects people to know how their personal information is used, and it's simply good manners."),
     ("Will it connect to ChatGPT, Claude and Gemini?",
@@ -116,7 +120,8 @@ TODO = [
     "Live website address (domain) for sitemap and share links",
     "What the R6 500 pre-order includes, and delivery timing",
     "Official colour names",
-    "Folio specifications: size and materials (inside layout is now shown)",
+    "Folio specifications: size and materials",
+    "Listening device and power bank details (battery life, charging, how notes reach the inbox)",
     "Terms for the 20% reward (what it applies to, expiry)",
     "Company name and details for the Privacy Policy and pre-order terms",
     "Lifestyle photos of the folio in use (desk, meeting room)",
