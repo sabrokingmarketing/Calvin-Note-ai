@@ -16,6 +16,48 @@ def ui(name, cls=""):
     return svg.replace(' width="24" height="24"', ' width="20" height="20"', 1)
 
 
+def photo(stem, alt, w, h, sizes="(max-width: 860px) 92vw, 760px", cls="", style=""):
+    """A real photograph (800/1600 widths)."""
+    return (f'<img class="{cls}" src="assets/img/{stem}-1600.webp" '
+            f'srcset="assets/img/{stem}-800.webp 800w, assets/img/{stem}-1600.webp 1600w" sizes="{sizes}" '
+            f'width="{w}" height="{h}" alt="{e(alt)}" loading="lazy" decoding="async"{f' style="{style}"' if style else ""}>')
+
+
+def lifestyle(stem="life-meeting", alt="A woman in an office holding a tan HiNote Book folio and a pencil, with colleagues working at a table behind her",
+              w=1536, h=1024, eyebrow="In the room", h2="Made for the meeting room",
+              p="Walk in with the folio under your arm and your phone tucked inside. Write down what you want to remember. The assistant keeps the rest.",
+              pos=""):
+    style = f"object-position:{pos}" if pos else ""
+    return f"""<div class="feature-photo">
+  <div class="fp-img">{photo(stem, alt, w, h, "(max-width: 860px) 92vw, 1200px", "", style)}</div>
+  <div class="glass">
+    <span class="eyebrow">{e(eyebrow)}</span>
+    <h2>{e(h2)}</h2>
+    <p>{e(p)}</p>
+    <a class="btn btn-primary" href="pre-order.html">Pre-order for {S.PRICE} {ARR}</a>
+  </div>
+</div>"""
+
+
+def inside(stem="folio-open", alt="The tan folio lying open on a wooden desk, showing a phone in a pocket with a camera window, a pen loop and a cream notebook under the snap flap", w=1600, h=2142):
+    items = [
+        ("Phone pocket", "Holds your phone, with a window for the camera."),
+        ("Notebook", "Paper for the thoughts you want to keep by hand."),
+        ("Pen loop", "Your pen stays with your notes."),
+        ("Snap closure", "The flap closes with a press stud."),
+    ]
+    lis = "".join(f"<li><b>{e(h)}</b><span>{e(p)}</span></li>" for h, p in items)
+    return f"""<div class="split inside">
+  <div>
+    <span class="eyebrow">Inside the folio</span>
+    <h2>Everything you carry into a meeting, in one place</h2>
+    <p class="lede">Open the flap and your phone, notebook and pen are laid out side by side, ready when the meeting starts.</p>
+    <ul class="dot-list">{lis}</ul>
+  </div>
+  <div class="inside-img">{photo(stem, alt, w, h, "(max-width: 860px) 92vw, 560px")}</div>
+</div>"""
+
+
 MARK = ('<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" '
         'stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/>'
         '<path d="M3.5 7.5 12 13l8.5-5.5"/><circle cx="12" cy="16.4" r="1.35" fill="#fff" stroke="none"/></svg>')
@@ -397,6 +439,10 @@ def home():
 
 <section class="section ground-sand"><div class="wrap">{showcase()}</div></section>
 
+<section class="section"><div class="wrap">{lifestyle()}</div></section>
+
+<section class="section ground-surface"><div class="wrap">{inside()}</div></section>
+
 <section class="section ground-soft"><div class="wrap">
   <div class="s-head"><h2>Quiet the noise. Keep the details.</h2></div>
   {facts}
@@ -429,6 +475,8 @@ def product():
     specs = [
         ("Design", "Envelope flap with stitched edges"),
         ("Finish", "Soft leather finish"),
+        ("Inside", "Phone pocket with camera window, notebook, pen loop"),
+        ("Closure", "Snap-button flap"),
         ("Colours", "Tan, Onyx, Stone, Blush"),
         ("Pre-order price", S.PRICE),
         ("Size and materials", "Confirmed by our team when they contact you"),
@@ -436,8 +484,10 @@ def product():
     ]
     rows = "".join(f"<li><b style='min-width:11rem;display:inline-block'>{e(k)}</b><span>{e(v)}</span></li>" for k, v in specs)
     body = f"""
-{page_hero("The notebook", "A stitched folio with an assistant inside the work", "Paper for the ideas you want to keep by hand. An AI assistant for everything that was said.")}
+{page_hero("The notebook", "A stitched folio with an assistant inside the work", "Paper for the ideas you want to keep by hand. An AI assistant for everything that was said.", True, '<div class="hero-shot">' + photo("folio-lineup", "Three HiNote Book folios side by side in tan, black and blush", 906, 650, "(max-width: 960px) 92vw, 880px") + '</div>')}
 <section class="section ground-sand"><div class="wrap">{showcase("Choose the colour you'll carry every day", "prod-img")}</div></section>
+<section class="section"><div class="wrap">{inside("folio-boardroom", "The tan folio lying open on a boardroom table, with a phone in its pocket, a pen and a notebook, chairs and a city view behind", 1600, 2142)}</div></section>
+<section class="section ground-surface"><div class="wrap">{lifestyle()}</div></section>
 <section class="section"><div class="wrap">
   <div class="s-head"><h2>Paper and software, each doing its part</h2><p>The folio is for you. The assistant is for the record.</p></div>
   <div class="cards3">{c}</div>
@@ -479,6 +529,7 @@ def how():
     body = f"""
 {page_hero("How it works", "Before, during and after every meeting", "Three simple stages. You stay in the conversation; the assistant does the admin.")}
 <section class="section"><div class="wrap"><div class="timeline">{t}</div></div></section>
+<section class="section ground-surface"><div class="wrap">{lifestyle("folio-boardroom", "The tan folio lying open on a boardroom table, with a phone in its pocket, a pen and a notebook, chairs and a city view behind", 1600, 2142, "Set up in seconds", "Open the folio and start the meeting", "Your phone sits in its pocket, your notebook lies flat and your pen is in its loop. Nothing to set up on the table.", "50% 68%")}</div></section>
 <section class="section ground-surface"><div class="wrap">{notes_examples("hw")}</div></section>
 <section class="section"><div class="wrap">
   <div class="s-head"><h2>Made for people who live in meetings</h2><p>If your calendar is full of calls, this is for you.</p></div>
@@ -592,7 +643,7 @@ def preorder():
     </div>
   </div>
   <aside class="side-card" aria-label="Order summary">
-    {img("folio-onyx", "Black leather folio with a stitched envelope flap", "(max-width: 860px) 70vw, 380px")}
+    {photo("folio-lineup", "HiNote Book folios in tan, black and blush", 906, 650, "(max-width: 860px) 90vw, 420px", "lineup")}
     <div class="p">{S.PRICE}</div><p>Pre-order price. Nothing is charged on this website.</p>
     <ul><li>Our team confirms colour, delivery and payment with you</li><li>Change your colour any time before it ships</li><li>Questions? <a class="link" href="https://wa.me/{S.WHATSAPP}">WhatsApp us</a></li></ul>
   </aside>

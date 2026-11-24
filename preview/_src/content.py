@@ -103,7 +103,7 @@ TODO = [
     "Live website address (domain) for sitemap and share links",
     "What the R1 500 pre-order includes, and delivery timing",
     "Official colour names",
-    "Folio specifications: size, materials, what fits inside",
+    "Folio specifications: size and materials (inside layout is now shown)",
     "Terms for the 20% reward (what it applies to, expiry)",
     "Company name and details for the Privacy Policy and pre-order terms",
     "Lifestyle photos of the folio in use (desk, meeting room)",
