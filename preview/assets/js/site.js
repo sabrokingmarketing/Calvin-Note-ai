@@ -413,17 +413,19 @@
       e.preventDefault();
       if (!validate()) return;
       var colour = form.querySelector("input[name=colour]:checked").value;
-      var reward = hasReward() ? "Yes, 20% scratch-card reward" : "No";
+      var reward = hasReward() ? "Yes, " + CFG.reward + " scratch-card reward" : "No";
+      var price = hasReward() ? CFG.priceReward + " once-off (" + CFG.price + " less " + CFG.reward + " reward)" : CFG.price + " once-off";
       var data = {
         Name: form.elements.name.value.trim(),
         Email: form.elements.email.value.trim(),
         Phone: form.elements.phone.value.trim(),
         Colour: colour,
         Province: form.elements.province.value || "Not given",
+        Price: price,
         Reward: reward,
         Notes: form.elements.notes.value.trim() || "None"
       };
-      var lines = ["Hi " + CFG.brand + " team, I'd like to place a pre-order (" + CFG.price + ").", ""];
+      var lines = ["Hi " + CFG.brand + " team, I'd like to place a pre-order.", ""];
       Object.keys(data).forEach(function (k) { lines.push(k + ": " + data[k]); });
       var msg = lines.join("\n");
       var wa = "https://wa.me/" + CFG.whatsapp + "?text=" + encodeURIComponent(msg);
@@ -432,7 +434,7 @@
       shell.querySelector("[data-send-mail]").href = mail;
       var dl = shell.querySelector("[data-summary]");
       dl.innerHTML = "";
-      ["Name", "Email", "Phone", "Colour", "Reward"].forEach(function (k) {
+      ["Name", "Email", "Phone", "Colour", "Price"].forEach(function (k) {
         var dt = document.createElement("dt"); dt.textContent = k;
         var dd = document.createElement("dd"); dd.textContent = data[k];
         dl.appendChild(dt); dl.appendChild(dd);

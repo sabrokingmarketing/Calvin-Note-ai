@@ -11,8 +11,19 @@ BRAND = "HiNote Book"
 TAGLINE = "The leather notebook that keeps your meeting notes"
 BRAND_BLUE = "#1f5bd6"
 
-PRICE = "R1 500"            # pre-order amount (Rand, written R1 500)
-REWARD = "20%"              # scratch-card reward
+PRICE_RAND = 6500           # once-off pre-order price in Rand
+REWARD_PCT = 20             # scratch-card reward, percent off
+
+
+def rand(n):
+    """Write Rand the South African way: R6 500"""
+    return "R" + f"{n:,}".replace(",", "\u00a0")  # non-breaking space keeps "R6 500" on one line
+
+
+PRICE = rand(PRICE_RAND)                                        # "R6 500"
+REWARD = f"{REWARD_PCT}%"                                       # "20%"
+PRICE_REWARD = rand(round(PRICE_RAND * (100 - REWARD_PCT) / 100))  # "R5 200"
+SAVING = rand(PRICE_RAND - round(PRICE_RAND * (100 - REWARD_PCT) / 100))  # "R1 300"
 
 # TODO: real WhatsApp number in international format, no plus, no leading 0 (e.g. 27821234567)
 WHATSAPP = "27XXXXXXXXX"
@@ -69,14 +80,14 @@ FAQ_HOME = [
      "Straight to your email inbox. When the meeting ends, the assistant sends you the summary, action items and a draft follow-up email to review before you share anything."),
     ("Is the AI assistant available today?",
      "Not yet. Pre-orders are open now. When our team contacts you about your pre-order, they will share the timing for the folio and for assistant access."),
-    ("How does the R1 500 pre-order work?",
-     "Fill in the short pre-order form and send it. You don't pay anything on this website. Our team will contact you to confirm your colour, delivery and payment."),
+    (f"How does the {PRICE} pre-order work?",
+     f"It is a once-off price of {PRICE}. Fill in the short pre-order form and send it. You don't pay anything on this website. Our team will contact you to confirm your colour, delivery and payment."),
     ("Which meeting apps will it work with?",
      "Zoom, Google Meet and Microsoft Teams are planned first. The integrations page shows each one's status, and nothing is marked live until it works."),
     ("Can I edit the notes before I share them?",
      "Yes, that is the plan. Summaries, action items and the follow-up email are drafts you check and change before anything goes out."),
     ("How do I use the 20% scratch-card reward?",
-     "Scratch the card on the homepage. The reward is saved on your device and added to your pre-order form automatically, and our team applies it when they confirm your order."),
+     f"Scratch the card on the homepage. The reward is saved on your device and applied to your pre-order automatically, so you pay {PRICE_REWARD} instead of {PRICE}."),
 ]
 
 FAQ_MORE = [
@@ -103,7 +114,7 @@ TODO = [
     "Phone number for tap-to-call",
     "Email address for pre-orders",
     "Live website address (domain) for sitemap and share links",
-    "What the R1 500 pre-order includes, and delivery timing",
+    "What the R6 500 pre-order includes, and delivery timing",
     "Official colour names",
     "Folio specifications: size and materials (inside layout is now shown)",
     "Terms for the 20% reward (what it applies to, expiry)",

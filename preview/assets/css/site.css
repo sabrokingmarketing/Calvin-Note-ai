@@ -619,3 +619,12 @@ h1,h2,h3{text-transform:capitalize}
 .brand-logo{height:68px;width:auto;display:block}
 .site-footer .brand-logo{height:64px}
 @media (max-width:980px){.brand-logo{height:60px}}
+
+/* Price with scratch-card reward */
+.p-now,.p-badge,.p-note-reward{display:none}
+.has-reward .p-now{display:inline}
+.has-reward .p-badge{display:inline-flex;align-items:center;vertical-align:middle;margin-left:12px;font-family:var(--font-body);font-size:14px;letter-spacing:0;font-weight:600;color:#11623b;background:#e1f5ea;border-radius:999px;padding:4px 10px}
+.has-reward .p-was{text-decoration:line-through;text-decoration-thickness:2px;color:var(--muted);font-size:.5em;margin-right:12px;letter-spacing:-.02em}
+.has-reward .p-note-reward{display:block}
+.has-reward .p-note-base{display:none}
+.side-card .p-note-reward{color:#11623b}

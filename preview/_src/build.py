@@ -73,6 +73,14 @@ def slideshow(slides):
             '</button></div></div>')
 
 
+def price_block():
+    """Full price; when the scratch-card reward is saved, it shows crossed out next to the reward price."""
+    return (f'<span class="p-was">{S.PRICE}</span><span class="p-now">{S.PRICE_REWARD}</span>'
+            f'<span class="p-badge">{S.REWARD} off</span>')
+
+
+TOP_SCRIPT = '<script>/* Always open a page at the top (unless the link points to a spot on the page) */\ntry{if("scrollRestoration" in history)history.scrollRestoration="manual";}catch(e){}\n(function(){function top(){if(!location.hash){document.documentElement.style.scrollBehavior="auto";window.scrollTo(0,0);document.documentElement.style.scrollBehavior="";}}\ndocument.addEventListener("DOMContentLoaded",top);window.addEventListener("load",top);window.addEventListener("pageshow",function(e){if(e.persisted)top();});})();</script>\n'
+
 MARK = ('<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" '
         'stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/>'
         '<path d="M3.5 7.5 12 13l8.5-5.5"/><circle cx="12" cy="16.4" r="1.35" fill="#fff" stroke="none"/></svg>')
@@ -113,8 +121,8 @@ def head(title, desc, path):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap">
 <link rel="stylesheet" href="assets/css/site.css">
-<script>window.SITE={json.dumps({"brand": S.BRAND, "price": S.PRICE, "whatsapp": S.WHATSAPP, "email": S.EMAIL})};</script>
-<script defer src="assets/js/site.js"></script>
+<script>window.SITE={json.dumps({"brand": S.BRAND, "price": S.PRICE, "priceReward": S.PRICE_REWARD, "reward": S.REWARD, "whatsapp": S.WHATSAPP, "email": S.EMAIL})};</script>
+{TOP_SCRIPT}<script defer src="assets/js/site.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -178,7 +186,6 @@ def footer():
     </div>
   </div>
 </footer>
-<a class="wa-float" href="https://wa.me/{S.WHATSAPP}" aria-label="Chat with us on WhatsApp"><img src="assets/icons/whatsapp.svg" alt="" width="32" height="32"></a>
 <div class="sr-only" aria-live="polite" id="scratch-live"></div>
 </body>
 </html>
@@ -319,7 +326,7 @@ def showcase(h2="A notebook worth carrying into the room", pid="show-img"):
     <div class="swatches" role="radiogroup" aria-label="Folio colour" data-swatches="{pid}">{sw}</div>
     <ul class="points">
       <li>{ui("check")}<span>Four colours: Tan, Onyx, Stone and Blush.</span></li>
-      <li>{ui("check")}<span>Pre-order price {S.PRICE}. No payment on this website.</span></li>
+      <li>{ui("check")}<span>Once-off pre-order price {S.PRICE}. No payment on this website.</span></li>
     </ul>
     <div class="actions"><a class="btn btn-primary" href="pre-order.html">Pre-order in <span data-colour-name>{first[1]}</span> {ARR}</a></div>
   </div>
@@ -360,7 +367,7 @@ def scratch_card():
       <div class="scratch-under" aria-hidden="true">
         <span class="k">Your reward</span>
         <span class="v">{S.REWARD.rstrip('%')}<small>% off</small></span>
-        <span class="s">Added to your {S.PRICE} pre-order</span>
+        <span class="s">You pay {S.PRICE_REWARD} instead of {S.PRICE}</span>
       </div>
       <canvas aria-label="Scratch card. Scratch to reveal your reward, or use the Reveal button below." role="img"></canvas>
       <div class="confetti" aria-hidden="true"></div>
@@ -382,7 +389,7 @@ def home():
         "risk": "One risk came up: the supplier has slipped once already, so the new date depends on their next update.",
     })
     facts = f"""<div class="facts">
-  <div class="fact"><span class="tag">Pre-order price</span><span class="big">{S.PRICE}</span><p>Reserve your folio now. You don't pay on this website.</p></div>
+  <div class="fact"><span class="tag">Pre-order price</span><span class="big">{S.PRICE}</span><p>Once-off. Reserve your folio now; you don't pay on this website.</p></div>
   <div class="fact"><span class="tag">Leather colours</span><span class="big">{len(S.COLOURS)}</span><p>Tan, Onyx, Stone and Blush. Pick yours on the pre-order form.</p></div>
   <div class="fact"><span class="tag">Early reward</span><span class="big">{S.REWARD}<small>off</small></span><p>Scratch the card further down this page to unlock it.</p></div>
 </div>"""
@@ -497,7 +504,7 @@ def product():
         ("Inside", "Phone pocket with camera window, notebook, pen loop"),
         ("Closure", "Snap-button flap"),
         ("Colours", "Tan, Onyx, Stone, Blush"),
-        ("Pre-order price", S.PRICE),
+        ("Pre-order price", S.PRICE + " once-off"),
         ("Size and materials", "Confirmed by our team when they contact you"),
         ("Delivery", "Confirmed by our team when they contact you"),
     ]
@@ -595,10 +602,10 @@ def pricing():
     ]
     cl = "".join(f"<li>{ui('check')}<span>{e(c)}</span></li>" for c in checks)
     body = f"""
-{page_hero("Pricing", f"One simple pre-order: {S.PRICE}", "No subscriptions to choose on this page and no payment online. Reserve yours and we'll take it from there.", False)}
+{page_hero("Pricing", f"One simple pre-order: {S.PRICE} once-off", "No subscriptions to choose on this page and no payment online. Reserve yours and we'll take it from there.", False)}
 <section class="section"><div class="wrap">
   <div class="price-wrap">
-    <div class="price-card"><span class="tag">Pre-order</span><div class="price">{S.PRICE}</div><p class="sub">Reserve now. Our team confirms the details before you pay.</p>
+    <div class="price-card"><span class="tag">Pre-order</span><div class="price">{price_block()}</div><p class="sub p-note-base">Once-off. Reserve now; our team confirms the details before you pay.</p><p class="sub p-note-reward">Your {S.REWARD} scratch-card reward is applied: you save {S.SAVING}. Once-off; our team confirms the details before you pay.</p>
       <ul class="checks">{cl}</ul>
       <a class="btn btn-primary" href="pre-order.html">Pre-order for {S.PRICE} {ARR}</a></div>
     <div class="after-card"><h3>What happens next</h3><ol>
@@ -663,7 +670,7 @@ def preorder():
   </div>
   <aside class="side-card" aria-label="Order summary">
     {photo("folio-lineup", "HiNote Book folios in tan, black and blush", 906, 650, "(max-width: 860px) 90vw, 420px", "lineup")}
-    <div class="p">{S.PRICE}</div><p>Pre-order price. Nothing is charged on this website.</p>
+    <div class="p">{price_block()}</div><p class="p-note-base">Once-off pre-order price. Nothing is charged on this website.</p><p class="p-note-reward">Your {S.REWARD} scratch-card reward is applied: you save {S.SAVING}. Once-off, nothing charged on this website.</p>
     <ul><li>Our team confirms colour, delivery and payment with you</li><li>Change your colour any time before it ships</li><li>Questions? <a class="link" href="https://wa.me/{S.WHATSAPP}">WhatsApp us</a></li></ul>
   </aside>
 </div>
@@ -726,9 +733,9 @@ def terms():
     body = f"""
 {page_hero("Pre-order terms", "Pre-order terms", "The simple rules behind the pre-order, in plain English.", False)}
 <section class="section"><div class="wrap"><div class="prose">
-<h2>The pre-order</h2><p>The pre-order price is {S.PRICE}. Sending a pre-order reserves your place. It is not a payment and it is not a binding purchase until our team has confirmed the details with you and you have paid.</p>
+<h2>The pre-order</h2><p>The pre-order price is {S.PRICE}, once-off. Sending a pre-order reserves your place. It is not a payment and it is not a binding purchase until our team has confirmed the details with you and you have paid.</p>
 <h2>What happens next</h2><p>Our team contacts you to confirm your colour, delivery and how to pay. If anything about the product or timing changes, we'll tell you before you pay.</p>
-<h2>The {S.REWARD} reward</h2><p>The scratch-card reward is {S.REWARD} off your pre-order. One reward per customer. Our team confirms the final amount with you before payment.</p>
+<h2>The {S.REWARD} reward</h2><p>The scratch-card reward is {S.REWARD} off your pre-order, so you pay {S.PRICE_REWARD} instead of {S.PRICE}. One reward per customer. Our team confirms the final amount with you before payment.</p>
 <h2>Changing your mind</h2><p>You can cancel a pre-order at any time before you pay, by WhatsApp or email. After payment, the Consumer Protection Act and your other legal rights still apply.</p>
 <h2>The AI assistant</h2><p>Features and integrations described on this website are planned and may change. We mark integrations as live only when they work.</p>
 <p class="note-box" style="margin-top:32px">Last updated: November 2026.</p>

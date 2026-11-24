@@ -23,7 +23,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap">
 <link rel="stylesheet" href="assets/css/site.css">
-<script>window.SITE={"brand": "HiNote Book", "price": "R1 500", "whatsapp": "27XXXXXXXXX", "email": "hello@hinotebook.example"};</script>
+<script>window.SITE={"brand": "HiNote Book", "price": "R6\u00a0500", "priceReward": "R5\u00a0200", "reward": "20%", "whatsapp": "27XXXXXXXXX", "email": "hello@hinotebook.example"};</script>
+<script>/* Always open a page at the top (unless the link points to a spot on the page) */
+try{if("scrollRestoration" in history)history.scrollRestoration="manual";}catch(e){}
+(function(){function top(){if(!location.hash){document.documentElement.style.scrollBehavior="auto";window.scrollTo(0,0);document.documentElement.style.scrollBehavior="";}}
+document.addEventListener("DOMContentLoaded",top);window.addEventListener("load",top);window.addEventListener("pageshow",function(e){if(e.persisted)top();});})();</script>
 <script defer src="assets/js/site.js"></script>
 </head>
 <body>
@@ -33,14 +37,14 @@
     <a class="brand" href="index.html" aria-label="HiNote Book home"><img class="brand-logo" src="assets/img/logo-outline.png" alt="HiNote Book" width="310" height="200"></a>
     <nav class="nav-pill" aria-label="Main"><a href="index.html">Home</a><a href="product.html">Product</a><a href="how-it-works.html">How it works</a><a href="integrations.html">Integrations</a><a href="pricing.html">Pricing</a><a href="faq.html">FAQ</a></nav>
     <div class="head-actions">
-      <a class="btn btn-white btn-sm" href="pre-order.html">Pre-order<span class="long">&nbsp;· R1 500</span></a>
+      <a class="btn btn-white btn-sm" href="pre-order.html">Pre-order<span class="long">&nbsp;· R6 500</span></a>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span></button>
     </div>
   </div>
 </header>
 <div class="mobile-menu" id="mobile-menu">
   <nav aria-label="Mobile"><a class="m-link" href="index.html">Home<span aria-hidden="true">→</span></a><a class="m-link" href="product.html">Product<span aria-hidden="true">→</span></a><a class="m-link" href="how-it-works.html">How it works<span aria-hidden="true">→</span></a><a class="m-link" href="integrations.html">Integrations<span aria-hidden="true">→</span></a><a class="m-link" href="pricing.html">Pricing<span aria-hidden="true">→</span></a><a class="m-link" href="faq.html">FAQ<span aria-hidden="true">→</span></a><a class="m-link" href="contact.html">Contact<span aria-hidden="true">→</span></a></nav>
-  <a class="btn btn-primary" href="pre-order.html">Pre-order for R1 500 <span class="arr" aria-hidden="true">→</span></a>
+  <a class="btn btn-primary" href="pre-order.html">Pre-order for R6 500 <span class="arr" aria-hidden="true">→</span></a>
   <p class="m-contact">Questions? <a class="link" href="https://wa.me/27XXXXXXXXX">WhatsApp us</a> or call <a class="link" href="tel:+27XXXXXXXXX">+27 XX XXX XXXX</a>.</p>
 </div>
 <main id="main">
@@ -69,7 +73,7 @@
       <div>
         <a class="brand" href="index.html" aria-label="HiNote Book home"><img class="brand-logo" src="assets/img/logo.png" alt="HiNote Book" width="310" height="200"></a>
         <p>A stitched folio for your desk and an AI assistant for the record. Made for people who live in meetings.</p>
-        <a class="btn btn-primary btn-sm f-cta" href="pre-order.html">Pre-order for R1 500 <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn btn-primary btn-sm f-cta" href="pre-order.html">Pre-order for R6 500 <span class="arr" aria-hidden="true">→</span></a>
       </div>
       <div class="f-col"><h2>Product</h2><ul>
         <li><a href="product.html">The notebook</a></li>
@@ -95,7 +99,6 @@
     </div>
   </div>
 </footer>
-<a class="wa-float" href="https://wa.me/27XXXXXXXXX" aria-label="Chat with us on WhatsApp"><img src="assets/icons/whatsapp.svg" alt="" width="32" height="32"></a>
 <div class="sr-only" aria-live="polite" id="scratch-live"></div>
 </body>
 </html>

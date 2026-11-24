@@ -8,8 +8,8 @@ The owner is not a developer. Explain everything in plain, simple English.
 - Never invent reviews, prices, awards, statistics or client names.
 
 ## South Africa essentials
-- Floating WhatsApp button using https://wa.me/27XXXXXXXXX (international format, no leading 0).
-- Phone numbers as tap-to-call links. Prices in Rand, written like R1 500.
+- No floating WhatsApp button (the owner asked for it to be removed). WhatsApp links use https://wa.me/27XXXXXXXXX (international format, no leading 0).
+- Phone numbers as tap-to-call links. Prices in Rand, written like R6 500 (once-off pre-order price R6 500; 20% scratch-card reward makes it R5 200).
 - A simple Privacy Policy page that mentions POPIA.
 
 ## Quality bar (check before you finish)
